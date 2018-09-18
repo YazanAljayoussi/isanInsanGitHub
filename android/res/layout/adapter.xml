@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/CoverFragmentRL"
-        android:layout_marginBottom="30dp">
+        >
 
         <fragment
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="170dp"
+        android:visibility="gone"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +35,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/test2"
+
             android:textColor="#000"
             android:text="test"
             />

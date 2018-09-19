@@ -6,10 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
@@ -21,7 +24,8 @@ import rvf.Adapter;
 import rvf.TestComp;
 
 
-public class AndroidLauncher extends FragmentActivity implements Callbacks, BlankFragment.OnFragmentInteractionListener {
+public class AndroidLauncher extends FragmentActivity implements Callbacks
+		, BlankFragment.OnFragmentInteractionListener {
 	private GameFragment gameFragment;
 	private BlankFragment controlFragment;
 	ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
@@ -57,6 +61,22 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks, Blan
 
 		fillArrayList();
 		intiRV();
+		recyclerView.findViewHolderForAdapterPosition(0);
+		recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+			@Override
+			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+				return false;
+			}
+
+			@Override
+			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+			}
+
+			@Override
+			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+			}
+		});
 	}
 
 	private void fillArrayList() {

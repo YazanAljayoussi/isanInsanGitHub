@@ -1,10 +1,16 @@
 package rvf;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +26,7 @@ public class Adapter extends
         RecyclerView.Adapter<Adapter.ViewHolder> {
     private final Context context;
     ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
+    int[] startPosition  = new int[2];
 
     public Adapter(Context context
             , ArrayList<TestComp> testArrayList
@@ -38,8 +45,13 @@ public class Adapter extends
     }
 
     @Override
-    public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final Adapter.ViewHolder holder, int position) {
         fillInformationCard(context, position, holder);
+
+        holder.relativeLayout_rlCover.setTag(position);
+        holder.textView_xValue.setX(startPosition[0]);
+        holder.textView_yValue.setY(startPosition[1]);
+
     }
 
     private void fillInformationCard(Context context, int position, ViewHolder holder) {
@@ -54,13 +66,19 @@ public class Adapter extends
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView_test,textView_number;
-        RelativeLayout relativeLayout_CoverFragment;
+        TextView textView_test,textView_number
+                ,textView_xValue,textView_yValue;
+        RelativeLayout relativeLayout_CoverFragment,relativeLayout_rlCover;
         public ViewHolder(View itemView) {
             super(itemView);
             relativeLayout_CoverFragment = (RelativeLayout) itemView.findViewById(R.id.CoverFragmentRL);
+            relativeLayout_rlCover = (RelativeLayout) itemView.findViewById(R.id.rlCover);
             textView_test = (TextView) itemView.findViewById(R.id.test2);
             textView_number = (TextView) itemView.findViewById(R.id.test);
+
+            textView_xValue = (TextView) itemView.findViewById(R.id.xValueTV);
+            textView_yValue = (TextView) itemView.findViewById(R.id.yValueTV);
+
         }
 
     }

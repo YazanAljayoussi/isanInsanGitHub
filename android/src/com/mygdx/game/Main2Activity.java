@@ -52,6 +52,6 @@ public class Main2Activity extends AppCompatActivity {
 
     private void intiActivityComp() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.onScrolled();
+
     }
 }

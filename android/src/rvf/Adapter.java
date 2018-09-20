@@ -39,10 +39,15 @@ public class Adapter extends
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
     {
         View view = LayoutInflater.from(viewGroup.getContext()).
-        //TODO
-        //Access InsanRecyclerView instance and set a new holder
-        //holder.hashCode()
+                inflate(R.layout.adapter, viewGroup, false);
+
+        ViewHolder holder = new ViewHolder(view);
+
+
+        InsanRecyclerView.instance.setView(holder.hashCode(),view,holder);
+
         return holder;
+
     }
 
     @Override
@@ -52,10 +57,9 @@ public class Adapter extends
         holder.relativeLayout_rlCover.setTag(position);
         holder.textView_xValue.setX(startPosition[0]);
         holder.textView_yValue.setY(startPosition[1]);
-
         //TODO
-        // access InsanRecyclerView to sync location
-        // https://stackoverflow.com/questions/2224844/how-to-get-the-absolute-coordinates-of-a-view
+        //InsanRecyclerView.instance.syncViewLocation(holder.hashCode());
+
     }
 
     private void fillInformationCard(Context context, int position, ViewHolder holder) {
@@ -70,7 +74,7 @@ public class Adapter extends
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView_test,textView_number
+        public TextView textView_test,textView_number
                 ,textView_xValue,textView_yValue;
         RelativeLayout relativeLayout_CoverFragment,relativeLayout_rlCover;
         public ViewHolder(View itemView) {

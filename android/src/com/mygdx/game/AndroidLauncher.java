@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Timer;
 import java.util.ArrayList;
 
 import rvf.Adapter;
+import rvf.InsanRecyclerView;
 import rvf.TestComp;
 
 
@@ -29,7 +30,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	private GameFragment gameFragment;
 	private BlankFragment controlFragment;
 	ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
-	RecyclerView recyclerView;
+	InsanRecyclerView recyclerView;
 	Adapter adapter;
 
 	@Override
@@ -52,7 +53,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 
 	}
 	private void intiActivityComp() {
-		recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		recyclerView = (InsanRecyclerView) findViewById(R.id.recycler_view);
 	}
 
 	@Override

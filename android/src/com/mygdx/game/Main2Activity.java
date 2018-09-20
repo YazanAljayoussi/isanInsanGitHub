@@ -13,6 +13,7 @@ import rvf.TestComp;
 
 public class Main2Activity extends AppCompatActivity {
     ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
+    //TODO create InsanRecyclerView and use it
     RecyclerView recyclerView;
     Adapter adapter;
     @Override
@@ -51,5 +52,6 @@ public class Main2Activity extends AppCompatActivity {
 
     private void intiActivityComp() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.onScrolled();
     }
 }

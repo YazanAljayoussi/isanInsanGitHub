@@ -9,21 +9,6 @@
     android:layout_marginBottom="4dp"
     android:layout_height="200dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/CoverFragmentRL"
-        >
-
-        <fragment
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="rvf.fragment"
-            tools:layout="@layout/fragment"
-            />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -146,16 +131,6 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:id="@+id/test2"
-            android:visibility="gone"
-            android:textColor="#000"
-            android:text="test"
-            />
 
 
 

@@ -1,35 +1,26 @@
 package com.mygdx.game;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
 import com.badlogic.gdx.utils.Timer;
 
-import java.util.ArrayList;
-
 import rvf.Adapter;
 import rvf.InsanRecyclerView;
-import rvf.TestComp;
 
 
 public class AndroidLauncher extends FragmentActivity implements Callbacks
 		, BlankFragment.OnFragmentInteractionListener {
 	private GameFragment gameFragment;
 	private BlankFragment controlFragment;
-	ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
 	InsanRecyclerView recyclerView;
 	Adapter adapter;
 
@@ -60,33 +51,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	protected void onStart() {
 		super.onStart();
 
-		fillArrayList();
 		intiRV();
-		recyclerView.findViewHolderForAdapterPosition(0);
-		recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-			@Override
-			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-				return false;
-			}
-
-			@Override
-			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-			}
-
-			@Override
-			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-			}
-		});
-	}
-
-	private void fillArrayList() {
-		testArrayList = new ArrayList<TestComp>();
-		for (int i=0;i<20;i++)
-		{
-			TestComp text= new TestComp("test"+(i+1),i);
-			testArrayList.add(text);
-		}
 	}
 
 	private void intiRV() {
@@ -94,7 +59,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 		recyclerView.setHasFixedSize(true);
 		GridLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
 		recyclerView.setLayoutManager(mLayoutManager);
-		adapter = new Adapter(getApplicationContext(),testArrayList);
+		adapter = new Adapter(getApplicationContext());
 		recyclerView.setAdapter(adapter);
 	}
 	@Override

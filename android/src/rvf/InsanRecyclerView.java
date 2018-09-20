@@ -1,0 +1,78 @@
+package rvf;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.view.View;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by Mohammad.Obiedat on 9/20/2018.
+ */
+
+public class InsanRecyclerView extends RecyclerView {
+    HashMap  <Integer,HolderContent> viewsH =new HashMap<Integer,HolderContent>();
+    HashMap  <Integer,int[]> viewsLocationsHM =new HashMap<Integer,int[]>();
+
+    static InsanRecyclerView instance;
+
+    public InsanRecyclerView(Context context) {
+        super(context);
+        instance= this;
+    }
+
+    public InsanRecyclerView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        instance= this;
+    }
+
+    public InsanRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        instance= this;
+    }
+
+    public void setView(int holderHashCode,View view,rvf.Adapter.ViewHolder holder)
+    {
+        viewsH.put(holderHashCode,new HolderContent(view,holder));
+    }
+
+    public void syncViewLocation(int holderHashCode)
+    {
+        int[] xyIntArray  = new int[2];
+        //viewsH.get(holderHashCode).getLocationOnScreen(xyIntArray);
+        viewsLocationsHM.put(holderHashCode, xyIntArray);
+    }
+
+    @Override
+    public void onScrolled(int dx, int dy) {
+        super.onScrolled(dx, dy);
+        for (Map.Entry<Integer,HolderContent> entry : viewsH.entrySet()) {
+            HolderContent holderContent =  entry.getValue();
+            int holderHashCode = entry.getKey();
+
+            int[] xyIntArray  = new int[2];
+            holderContent.view.getLocationOnScreen(xyIntArray);
+            String xyValue = String.valueOf(String.valueOf(xyIntArray[0])
+                   +","+String.valueOf(xyIntArray[1]));
+            holderContent.holder.textView_xValue.setText(xyValue);
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        }
+    }
+
+     class HolderContent {
+
+        View view;
+        rvf.Adapter.ViewHolder holder;
+
+        public HolderContent(View view, rvf.Adapter.ViewHolder holder) {
+            this.view = view;
+            this.holder = holder;
+        }
+
+
+    }
+
+}

@@ -2,22 +2,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler_view"
-        android:visibility="gone"
-        android:layout_marginTop="250dp"/>
+
 
     <FrameLayout
         android:id="@+id/message_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <rvf.InsanRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:alpha="0.4"
+        />
+
     <FrameLayout
         android:id="@+id/send_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

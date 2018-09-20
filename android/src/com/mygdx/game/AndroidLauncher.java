@@ -1,11 +1,9 @@
 package com.mygdx.game;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -15,17 +13,15 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
 import com.badlogic.gdx.utils.Timer;
 
-import java.util.ArrayList;
-
 import rvf.Adapter;
-import rvf.TestComp;
+import rvf.InsanRecyclerView;
 
 
-public class AndroidLauncher extends FragmentActivity implements Callbacks, BlankFragment.OnFragmentInteractionListener {
+public class AndroidLauncher extends FragmentActivity implements Callbacks
+		, BlankFragment.OnFragmentInteractionListener {
 	private GameFragment gameFragment;
 	private BlankFragment controlFragment;
-	ArrayList<TestComp> testArrayList = new ArrayList<TestComp>();
-	RecyclerView recyclerView;
+	InsanRecyclerView recyclerView;
 	Adapter adapter;
 
 	@Override
@@ -48,24 +44,14 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks, Blan
 
 	}
 	private void intiActivityComp() {
-		recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		recyclerView = (InsanRecyclerView) findViewById(R.id.recycler_view);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		fillArrayList();
 		intiRV();
-	}
-
-	private void fillArrayList() {
-		testArrayList = new ArrayList<TestComp>();
-		for (int i=0;i<20;i++)
-		{
-			TestComp text= new TestComp("test"+(i+1),i);
-			testArrayList.add(text);
-		}
 	}
 
 	private void intiRV() {
@@ -73,7 +59,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks, Blan
 		recyclerView.setHasFixedSize(true);
 		GridLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
 		recyclerView.setLayoutManager(mLayoutManager);
-		adapter = new Adapter(getApplicationContext(),testArrayList);
+		adapter = new Adapter(getApplicationContext());
 		recyclerView.setAdapter(adapter);
 	}
 	@Override

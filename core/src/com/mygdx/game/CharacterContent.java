@@ -16,13 +16,19 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import sun.rmi.runtime.Log;
 
 class CharacterContent {
     private Model model;
     private ModelInstance modelInstance;
     private AnimationController controller;
+    private boolean me;
+    static private boolean mes= false;
     public CharacterContent(){
-
+        mes= !mes;
+        me= mes;
         // Model loader needs a binary json reader to decode
         UBJsonReader jsonReader = new UBJsonReader();
         // Create a model loader passing in our json reader
@@ -30,8 +36,6 @@ class CharacterContent {
 
         // Now load the model by name
         // Note, the model (g3db file ) and textures need to be added to the assets folder of the Android proj
-        //if (model==null)
-        model = modelLoader.loadModel(Gdx.files.getFileHandle("walking_3.g3db", Files.FileType.Internal));
         // Now create an instance.  Instance holds the positioning data, etc of an instance of your model
 
         ModelBuilder modelBuilder = new ModelBuilder();
@@ -50,10 +54,14 @@ class CharacterContent {
     }
     public Vector3  worldCoordinates;
     public void setLocation(int screenX, int screenY) {
-        float r =  1.66f;
-        //screenY= 12;//(int)(100 * r * 0.5);
-        screenX= (int)(50.0f);
-        worldCoordinates = new Vector3(screenX, screenY, 0);
+        if (MyGdxGame.instance== null){
+            boolean b= true;
+        }
+        int character_width= 50;
+
+        screenX= me ? character_width : (int)MyGdxGame.instance.camera_width - character_width;
+        float h= (float)screenY / (float)Gdx.graphics.getHeight();
+        worldCoordinates = new Vector3(screenX,  h * MyGdxGame.instance.camera_height, 0);
         modelInstance.transform.setToTranslation(worldCoordinates);
     }
 

@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.UBJsonReader;
 import java.util.Map;
 
 public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
+	public static MyGdxGame instance;
 	private OrthographicCamera camera;
 	private ModelBatch modelBatch;
 	private ModelBuilder modelBuilder;
@@ -31,6 +32,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public static Model model;
 	private AnimationController controller;
 	public static Boolean initialized= false;
+	public float camera_width;
+	public float camera_height;
 
 	public MyGdxGame(ICreator aCreator){
 		creator= aCreator;
@@ -39,12 +42,18 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public void create () {
 		dir= 1;
 
+
+
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		float r =  (h / w);
 
-		camera = new OrthographicCamera(200, h);//100 * r);//PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 70f);
+		camera_width= 250;
+		camera_height= camera_width * r;
+
+
+		camera = new OrthographicCamera(camera_width, camera_height);//100 * r);//PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 80f);
 		camera.lookAt(camera.viewportWidth / 2f, camera.viewportHeight / 2f,0f);
 		//camera.near =0.1f;
 		//camera.far = 300f;
@@ -58,6 +67,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		// Now load the model by name
 		// Note, the model (g3db file ) and textures need to be added to the assets folder of the Android proj
+		if (model== null)
 		model = modelLoader.loadModel(Gdx.files.getFileHandle("walking_3.g3db", Files.FileType.Internal));
 		// Now create an instance.  Instance holds the positioning data, etc of an instance of your model
 		//modelInstance = new ModelInstance(model);
@@ -77,6 +87,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		if (creator!= null)
 		creator.LibGDXInied();
 		initialized= true;
+		instance= this;
 	}
 
 	@Override
@@ -88,27 +99,28 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
+
+
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT|GL20.GL_DEPTH_BUFFER_BIT);
 
-		camera.update();
-		//controller.update(Gdx.graphics.getDeltaTime());
 
-		for (Map.Entry<Integer, CharacterContent> entry : ScrollSyncer.getInstance().getCharacters().entrySet()) {
-			CharacterContent characterContent = entry.getValue();
-			if (characterContent.worldCoordinates!=null) {
-				characterContent.syncLocation();
-			}
-		}
+		camera.update();
+
 
 		modelBatch.begin(camera);
-		//modelBatch.render(modelInstance,environment);
 
 		for (Map.Entry<Integer, CharacterContent> entry : ScrollSyncer.getInstance().getCharacters().entrySet()) {
 			CharacterContent characterContent = entry.getValue();
-			Integer holderHashCode = entry.getKey();
-			modelBatch.render(characterContent.getModelInstance(), environment);
+			if (characterContent.worldCoordinates != null) {
+				characterContent.syncLocation();
+				Integer holderHashCode = entry.getKey();
+				modelBatch.render(characterContent.getModelInstance(), environment);
+			}
+
 		}
+
+
 		modelBatch.end();
 	}
 

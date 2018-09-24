@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.mygdx.game.ScrollSyncer;
@@ -58,14 +59,10 @@ public class InsanRecyclerView extends RecyclerView {
 
             int[] xyIntArray  = new int[2];
             holderContent.view.getLocationOnScreen(xyIntArray);
-            String xyValue = String.valueOf(String.valueOf(xyIntArray[0])
-                   +","+String.valueOf(xyIntArray[1]));
-            holderContent.holder.textView_xValue.setText(xyValue);
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue() + "holderHashCode = " + Integer.toString(holderHashCode));
 
-            int y= Resources.getSystem().getDisplayMetrics().heightPixels - xyIntArray[1];
-            ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode);
-            //break;
+            int y= Resources.getSystem().getDisplayMetrics().heightPixels - (xyIntArray[1] + holderContent.view.getHeight());
+            //Log.i("Y: ", String.valueOf(xyIntArray[1]));
+            ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode, xyIntArray[1] == 0);
         }
     }
 

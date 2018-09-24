@@ -1,13 +1,19 @@
 package com.mygdx.game;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
@@ -28,6 +34,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		statusBarColor();
 		// 6. Finally, replace the AndroidLauncher activity content with the Libgdx Fragment.
 		gameFragment = new GameFragment();
 		//controlFragment = new BlankFragment();
@@ -113,4 +120,15 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	public void onPointerCaptureChanged(boolean hasCapture) {
 
 	}
+
+	private void statusBarColor() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+			Window window = this.getWindow();
+			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			window.setStatusBarColor(ContextCompat.getColor(this, R.color.statusBar));
+		}
+	}
+
+
 }

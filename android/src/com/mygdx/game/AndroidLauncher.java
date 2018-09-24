@@ -1,14 +1,17 @@
 package com.mygdx.game;
 
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
 import com.badlogic.gdx.utils.Timer;
@@ -78,8 +81,22 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
+			AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+			cfg.r = cfg.g = cfg.b = cfg.a = 8;
+
+			cfg.useGL30 = false;
+
 			myGdxGame= new MyGdxGame(this);
-			return initializeForView(myGdxGame);
+			View view = initializeForView(myGdxGame, cfg);
+
+//			if (graphics.getView() instanceof SurfaceView) {
+//				SurfaceView glView = (SurfaceView) graphics.getView();
+//				glView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+//				glView.setZOrderOnTop(true);
+//			}
+
+
+			return view;
 		}
 
 		@Override

@@ -1,13 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#d985d9"
+    >
 
 
 
     <FrameLayout
         android:id="@+id/characters_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#7bc6ac"
+        />
 
 
     <!--<FrameLayout-->
@@ -23,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
-        android:alpha="1"
+
         />
 
 

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.UBJsonReader;
 
@@ -23,6 +26,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public static MyGdxGame instance;
 	private OrthographicCamera camera;
 	private ModelBatch modelBatch;
+	private SpriteBatch spriteBatch;
 	private ModelBuilder modelBuilder;
 	private Model box;
 	private ModelInstance modelInstance;
@@ -34,7 +38,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public static Boolean initialized= false;
 	public float camera_width;
 	public float camera_height;
-
+	Image backgroundSprite;
+	Texture backgroundTexture;
 	public MyGdxGame(ICreator aCreator){
 		creator= aCreator;
 	}
@@ -43,7 +48,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		dir= 1;
 
 
-
+		/*
+		Set camera dimension
+		 */
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		float r =  (h / w);
@@ -55,10 +62,20 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		camera = new OrthographicCamera(camera_width, camera_height);//100 * r);//PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 80f);
 		camera.lookAt(camera.viewportWidth / 2f, camera.viewportHeight / 2f,0f);
+
+
 		//camera.near =0.1f;
 		//camera.far = 300f;
 
+
+		/*
+		Set the background
+		 */
+
+		backgroundTexture = new Texture("bg.jpg");
+
 		modelBatch = new ModelBatch();
+		spriteBatch= new SpriteBatch();
 
 		// Model loader needs a binary json reader to decode
 		UBJsonReader jsonReader = new UBJsonReader();
@@ -107,6 +124,14 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		camera.update();
 
+		/*
+		render background
+		 */
+		spriteBatch.begin();
+		spriteBatch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		spriteBatch.end();
+
+
 
 		modelBatch.begin(camera);
 
@@ -122,6 +147,8 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
 		modelBatch.end();
+
+
 	}
 
 	public void rotate(){

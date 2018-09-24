@@ -30,14 +30,14 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 		setContentView(R.layout.activity_main);
 		// 6. Finally, replace the AndroidLauncher activity content with the Libgdx Fragment.
 		gameFragment = new GameFragment();
-		controlFragment = new BlankFragment();
+		//controlFragment = new BlankFragment();
 
 		FragmentTransaction transaction =
 				getSupportFragmentManager().beginTransaction();
 
-		transaction.add(R.id.message_fragment, gameFragment);
-		transaction.add(R.id.send_fragment, controlFragment);
 
+		//transaction.add(R.id.send_fragment, controlFragment);
+		transaction.add(R.id.characters_fragment, gameFragment);
 
 		transaction.commit();
 		intiActivityComp();

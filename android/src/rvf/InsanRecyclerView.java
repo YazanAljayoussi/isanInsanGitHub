@@ -1,10 +1,13 @@
 package rvf;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.mygdx.game.ScrollSyncer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +61,11 @@ public class InsanRecyclerView extends RecyclerView {
             String xyValue = String.valueOf(String.valueOf(xyIntArray[0])
                    +","+String.valueOf(xyIntArray[1]));
             holderContent.holder.textView_xValue.setText(xyValue);
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue() + "holderHashCode = " + Integer.toString(holderHashCode));
+
+            int y= Resources.getSystem().getDisplayMetrics().heightPixels - xyIntArray[1];
+            ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode);
+            //break;
         }
     }
 

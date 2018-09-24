@@ -17,8 +17,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.UBJsonReader;
 
+import java.util.Map;
+
 public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
-	private PerspectiveCamera camera;
+	private OrthographicCamera camera;
 	private ModelBatch modelBatch;
 	private ModelBuilder modelBuilder;
 	private Model box;
@@ -26,8 +28,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private Environment environment;
 	private ICreator creator;
     public Integer dir;
-	private Model model;
+	public static Model model;
 	private AnimationController controller;
+	public static Boolean initialized= false;
 
 	public MyGdxGame(ICreator aCreator){
 		creator= aCreator;
@@ -35,11 +38,16 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void create () {
 		dir= 1;
-		camera = new PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		camera.position.set(0f, 300f, 100f);
-		camera.lookAt(0f,0f,0f);
-		camera.near =0.1f;
-		camera.far = 300f;
+
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
+		float r =  (h / w);
+
+		camera = new OrthographicCamera(200, h);//100 * r);//PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 70f);
+		camera.lookAt(camera.viewportWidth / 2f, camera.viewportHeight / 2f,0f);
+		//camera.near =0.1f;
+		//camera.far = 300f;
 
 		modelBatch = new ModelBatch();
 
@@ -52,15 +60,9 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		// Note, the model (g3db file ) and textures need to be added to the assets folder of the Android proj
 		model = modelLoader.loadModel(Gdx.files.getFileHandle("walking_3.g3db", Files.FileType.Internal));
 		// Now create an instance.  Instance holds the positioning data, etc of an instance of your model
-		modelInstance = new ModelInstance(model);
+		//modelInstance = new ModelInstance(model);
 
 
-		modelBuilder = new ModelBuilder();
-		box = modelBuilder.createBox(2f,2f,2f,
-				new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-				VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
-
-//		modelInstance = new ModelInstance(box);
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight,0.8f,0.8f,0.8f,1f));
@@ -68,12 +70,13 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 //		Animation animation= modelInstance.getAnimation("mixamo.com");
 //		animation.nodeAnimations
 //		Json Json= new Json();
-		controller = new AnimationController(modelInstance);
+		//controller = new AnimationController(modelInstance);
 
-		controller.setAnimation("mixamo.com",-1);
+		//controller.setAnimation("mixamo.com",-1);
 		Gdx.input.setInputProcessor(this);
 		if (creator!= null)
 		creator.LibGDXInied();
+		initialized= true;
 	}
 
 	@Override
@@ -89,14 +92,28 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT|GL20.GL_DEPTH_BUFFER_BIT);
 
 		camera.update();
-		controller.update(Gdx.graphics.getDeltaTime());
+		//controller.update(Gdx.graphics.getDeltaTime());
+
+		for (Map.Entry<Integer, CharacterContent> entry : ScrollSyncer.getInstance().getCharacters().entrySet()) {
+			CharacterContent characterContent = entry.getValue();
+			if (characterContent.worldCoordinates!=null) {
+				characterContent.syncLocation();
+			}
+		}
+
 		modelBatch.begin(camera);
-		modelBatch.render(modelInstance,environment);
+		//modelBatch.render(modelInstance,environment);
+
+		for (Map.Entry<Integer, CharacterContent> entry : ScrollSyncer.getInstance().getCharacters().entrySet()) {
+			CharacterContent characterContent = entry.getValue();
+			Integer holderHashCode = entry.getKey();
+			modelBatch.render(characterContent.getModelInstance(), environment);
+		}
 		modelBatch.end();
 	}
 
 	public void rotate(){
-		camera.rotateAround(new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f), 1f * dir);
+		// camera.rotateAround(new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f), 1f * dir);
 	}
 
 	@Override

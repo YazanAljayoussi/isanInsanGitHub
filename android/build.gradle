@@ -138,4 +138,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-plus:15.0.1'
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
+    implementation project(path: ':cameraView')
+
 }

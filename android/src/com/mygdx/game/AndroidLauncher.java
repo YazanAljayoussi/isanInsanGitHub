@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -29,12 +30,14 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	private BlankFragment controlFragment;
 	InsanRecyclerView recyclerView;
 	Adapter adapter;
-
+	Toolbar toolbar;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate( savedInstanceState);
 		setContentView(R.layout.activity_main);
 		statusBarColor();
+		toolbar = findViewById(R.id.toolbar);
+		//setSupportActionBar(toolbar);
 		// 6. Finally, replace the AndroidLauncher activity content with the Libgdx Fragment.
 		gameFragment = new GameFragment();
 		//controlFragment = new BlankFragment();

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:anim="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_chat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_hd"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_chat">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:orientation="vertical">
+
+        <com.kesen.appfire.views.ChatRecyclerView
+            android:id="@+id/recycler_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:paddingBottom="2dp" />
+
+
+        <TextView
+            android:id="@+id/tv_cant_send_messages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e1e1e1"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/you_cant_send_messages_to_group"
+            android:textColor="#565656"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/typing_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+
+            <include
+
+                layout="@layout/typing_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <com.devlomi.record_view.RecordView
+                android:id="@+id/record_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                app:slide_to_cancel_arrow="@drawable/ic_keyboard_arrow_left"
+                app:slide_to_cancel_margin_right="10dp"
+                app:slide_to_cancel_text="Slide To Cancel" />
+
+            <com.kesen.appfire.views.AnimButton
+                android:id="@+id/record_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/recv_bg_mic"
+                android:scaleType="centerInside"
+                app:recording="@drawable/recv_ic_mic_white"
+                app:typing="@drawable/ic_send" />
+
+
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+
+
+    </LinearLayout>
+
+
+    <com.devlomi.hidely.hidelyviews.HidelyImageButton
+
+        android:id="@+id/btn_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/scroll_circle_bg"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/btn_scroll_icon" />
+
+
+    <TextView
+        android:id="@+id/count_unread_badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="95dp"
+        android:layout_marginRight="38dp"
+        android:background="@drawable/unread_count_text_bg"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/unread_count_text_color"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+
+    <com.kesen.appfire.views.AttachmentView
+
+        android:id="@+id/attachment_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+
+</RelativeLayout>

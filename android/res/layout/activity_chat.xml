@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
+
+            <ImageButton
+                android:id="@+id/btn_toolbar_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                app:srcCompat="@drawable/ic_arrow_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <android.support.v7.widget.SearchView
+                    android:id="@+id/search_view_toolbar"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:hint="Search"
+                    app:closeIcon="@null"
+                    app:iconifiedByDefault="false"
+                    app:searchIcon="@null" />
+
+
+                <ImageButton
+                    android:padding="4dp"
+                    android:id="@+id/up_arrow_search_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_up" />
+
+                <ImageButton
+                    android:padding="4dp"
+                    android:id="@+id/down_arrow_search_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/up_arrow_search_toolbar"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_counter_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="0"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:id="@+id/relative_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_img_toolbar_chat_act"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"
+                        android:paddingTop="6dp"
+                        android:src="@drawable/user_img_wrapped" />
+
+                    <LinearLayout
+                        android:id="@+id/user_stat_toolbar_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingTop="11dp">
+
+                        <TextView
+                            android:id="@+id/user_name_toolbar_chat_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="John Doe"
+                            android:textSize="18sp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_typing_stat_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="fill"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:textColor="@color/toolbar_status_text_color"
+                            tools:text="Typing..." />
+
+                        <TextView
+                            android:textColor="@color/toolbar_status_text_color"
+                            android:id="@+id/available_stat_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:maxWidth="@dimen/max_width_group_users"
+                            tools:text="2Minutes Ago" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <include layout="@layout/content_chat" />
+
+
+</android.support.design.widget.CoordinatorLayout>

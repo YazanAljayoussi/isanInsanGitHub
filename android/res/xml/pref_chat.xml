@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="enter_is_send"
+        android:summary="@string/enter_is_sent_smmary"
+        android:title="@string/enter_is_send_title" />
+
+
+    <PreferenceCategory android:title="@string/media_auto_download_title">
+
+        <com.kesen.appfire.activities.settings.SettingsMultiSelectPreference
+            android:defaultValue="@array/autodownload_cellular_defaults"
+            android:entries="@array/autodownload"
+            android:entryValues="@array/autodownload_values"
+            android:key="@string/key_autodownload_cellular"
+            android:title="@string/mobile_data_title" />
+
+        <com.kesen.appfire.activities.settings.SettingsMultiSelectPreference
+            android:defaultValue="@array/autodownload_roaming_defaults"
+            android:entries="@array/autodownload"
+            android:entryValues="@array/autodownload_values"
+            android:key="@string/key_autodownload_roaming"
+            android:title="@string/roaming_title" />
+
+        <com.kesen.appfire.activities.settings.SettingsMultiSelectPreference
+            android:defaultValue="@array/autodownload_wifi_defaults"
+            android:entries="@array/autodownload"
+            android:entryValues="@array/autodownload_values"
+            android:key="@string/key_autodownload_wifi"
+            android:title="@string/wifi_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

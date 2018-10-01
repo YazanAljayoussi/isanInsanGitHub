@@ -1,37 +1,44 @@
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
-
-    <FrameLayout
-        android:id="@+id/characters_fragment"
-        android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_height="wrap_content" />
-
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/send_fragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:visibility="gone"-->
-
-        <!--android:layout_alignParentBottom="true" />-->
-
-
-    <rvf.InsanRecyclerView
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_view"
-        android:layout_marginTop="50dp"
-        android:alpha="1"
-        />
+        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
+
+            <TextView
+                android:id="@+id/tv_selected_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp"
+                android:visibility="gone" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <include layout="@layout/content_main" />
 
 
 
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

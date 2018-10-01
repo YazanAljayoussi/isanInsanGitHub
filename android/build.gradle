@@ -1,3 +1,6 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
 android {
     buildToolsVersion "28.0.1"
     compileSdkVersion 27
@@ -18,10 +21,15 @@ android {
     }
     defaultConfig {
         applicationId "com.mygdx.game"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -130,12 +138,56 @@ idea {
         }
     }
 }
+ext {
+    supportLibraryVersion = '27.1.1'
+}
 dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.google.android.gms:play-services-plus:15.0.1'
-    compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
+
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+
+    compile 'com.android.support:cardview-v7:27.1.1'
+    compile 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-storage:15.0.2'
+    implementation 'com.google.firebase:firebase-ads:15.0.1'
+    implementation 'com.google.firebase:firebase-functions:16.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.zhihu.android:matisse:0.5.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
+    implementation 'com.kailashdabhi:om-recorder:1.1.5'
+    implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.github.codekidX:storage-chooser:2.0.4.2'
+    implementation 'com.fxn769:musicwave:1.0'
+    implementation 'ca.barrenechea.header-decor:header-decor:0.2.8'
+    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+    implementation 'com.devlomi.record-view:record-view:2.0.0'
+    implementation 'io.realm:android-adapters:3.0.0'
+    implementation 'com.devlomi.hidely:hidely:1.0.0'
+    implementation 'com.github.broakenmedia:MultiContactPicker:1.7'
+    implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.github.ozodrukh:CircularReveal:1.1.0'
+    implementation 'io.michaelrocks:libphonenumber-android:8.4.1'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.10.3'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'me.zhanghai.android.systemuihelper:library:1.0.0'
+    implementation 'com.evernote:android-job:1.2.6'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    implementation project(path: ':cameraView')
 }
+apply plugin: 'com.google.gms.google-services'

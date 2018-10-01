@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/margin_bottom_message"
+    android:layout_marginTop="@dimen/margin_top_message"
+    android:orientation="vertical"
+    tools:background="@drawable/background_hd">
+
+    <com.kesen.appfire.views.backgroundtintlayouts.LinearLayoutWithBackgroundTint
+        android:id="@+id/file_root_container"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="left"
+        android:background="@drawable/received_message"
+        app:relativeBgTintColor="@color/received_message_background_color">
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/tv_username_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textColor="@color/blue" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <com.kesen.appfire.views.ProgressWithCancelView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/progress_bar_cancel"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/circle_bg_blue"
+            app:progressBarColor="@color/colorAccent" />
+
+
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/file_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/circle_bg_blue"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_insert_drive_file" />
+
+        <TextView
+            android:id="@+id/tv_file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/file_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="4dp"
+            tools:text="File_20323232-15951.APK"
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
+
+
+        <ImageButton
+            android:layout_marginLeft="8dp"
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/circle_bg_blue"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_file_download"
+            android:tint="#fff"
+            android:visibility="invisible" />
+
+
+        <TextView
+            android:id="@+id/tv_file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_file_name"
+            android:layout_toRightOf="@id/file_icon"
+            android:text="2.3 MB"
+            android:textColor="@color/text_color_grey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_file_extension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_file_name"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/tv_file_size"
+            tools:text="JPG"
+            android:textColor="@color/text_color_grey"
+            android:textSize="12sp" />
+
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/ReceivedMessageTimeTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:07 PM "
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_file_extension"
+
+            />
+        </RelativeLayout>
+
+
+
+
+
+    </com.kesen.appfire.views.backgroundtintlayouts.LinearLayoutWithBackgroundTint>
+
+
+</FrameLayout>

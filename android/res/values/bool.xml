@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="is_new_chat_ad_enabled">true</bool>
+    <bool name="is_main_ad_enabled">true</bool>
+    <bool name="is_interstitial_ad_enabled">true</bool>
+</resources>

@@ -34,10 +34,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+ext {
+    supportLibraryVersion = '27.1.1'
 }
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
@@ -65,6 +69,7 @@ task copyAndroidNatives() {
         }
     }
 }
+
 task run(type: Exec) {
     def path
     def localProperties = project.file("../local.properties")
@@ -138,21 +143,21 @@ idea {
         }
     }
 }
-ext {
-    supportLibraryVersion = '27.1.1'
-}
+
 dependencies {
+
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
 
+    //noinspection GradleCompatible
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
 
     implementation 'com.google.firebase:firebase-core:16.0.3'
 
-    compile 'com.android.support:cardview-v7:27.1.1'
-    compile 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.google.firebase:firebase-database:16.0.1'
@@ -190,4 +195,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation project(path: ':cameraView')
 }
+
+
 apply plugin: 'com.google.gms.google-services'

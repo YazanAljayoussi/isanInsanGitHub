@@ -40,15 +40,15 @@ public class Adapter extends
 
         ViewHolder holder = new ViewHolder(view);
 
-        InsanRecyclerView.instance.setView(holder.hashCode(),view,holder);
+        InsanRecyclerView.instance.setView(view,holder);
         return holder;
 
     }
 
     @Override
     public void onBindViewHolder(final Adapter.ViewHolder holder, int position) {
-        //TODO
-        //InsanRecyclerView.instance.syncViewLocation(holder.hashCode());
+        //TODO set animation here!
+        InsanRecyclerView.instance.syncViewLocation(holder.hashCode());
     }
 
     @Override

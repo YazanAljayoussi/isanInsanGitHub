@@ -159,7 +159,7 @@
     <string name="error">error</string>
 
     <!--TODO Replace "YOUR_KEY" with your Key from Google Developers Console-->
-    <string name="maps_api_key">AIzaSyANuL-1nWLHp-jt1tvgA0aCXcpWHkohU_A</string>
+    <string name="maps_api_key">AIzaSyAlSPSsnzIx5SIIRvcj0MTxN6qwH57BQ7s</string>
     <string name="new_group">New Group</string>
     <string name="add_participants">Add Participants</string>
     <string name="max_number_of_users_reached">Max Number of users reached</string>

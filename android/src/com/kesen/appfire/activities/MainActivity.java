@@ -87,12 +87,11 @@ public class MainActivity extends BaseActivity implements GroupTyping.GroupTypin
         return isInActionMode;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         presenceUtil = new PresenceUtil();
         getChats();
         setTheAdapter();

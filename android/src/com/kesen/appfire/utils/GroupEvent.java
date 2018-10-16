@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Keep;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.events.UpdateGroupEvent;
 import com.kesen.appfire.model.constants.GroupEventTypes;
 import com.kesen.appfire.model.constants.MessageType;

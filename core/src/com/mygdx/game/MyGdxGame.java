@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.kesen.echo;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Files;

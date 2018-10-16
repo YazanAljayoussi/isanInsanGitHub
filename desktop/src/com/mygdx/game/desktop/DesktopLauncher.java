@@ -1,9 +1,9 @@
-package com.mygdx.game.desktop;
+package com.kesen.echo.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.ICreator;
-import com.mygdx.game.MyGdxGame;
+import com.kesen.echo.ICreator;
+import com.kesen.echo.MyGdxGame;
 
 public class DesktopLauncher implements ICreator {
 	public static void main (String[] arg) {

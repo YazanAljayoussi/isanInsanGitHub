@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.constants.MessageType;
 import com.kesen.appfire.model.constants.NetworkType;
 import com.kesen.appfire.model.realms.User;

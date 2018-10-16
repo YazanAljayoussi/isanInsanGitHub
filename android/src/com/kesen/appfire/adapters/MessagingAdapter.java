@@ -27,7 +27,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ChatActivity;
 import com.kesen.appfire.activities.ContactDetailsActivity;
 import com.kesen.appfire.model.AudioRecyclerState;
@@ -78,8 +78,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     private Context context;
     User user;
     String myThumbImg;
-
-
     //this saves/change the audio or voice state (progress,isPlaying ,maxProgress and the duration )
     HashMap<String, AudioRecyclerState> audioRecyclerState = new HashMap<>();
     // saves/change network progress if there is a download/upload process to update the UI
@@ -96,13 +94,13 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     private boolean isGroup;
     private RealmList<User> groupUsers;
 
-
     public List<Message> getSelectedItemsForActionMode() {
         return selectedItemsForActionMode;
     }
 
 
-    public MessagingAdapter(@Nullable OrderedRealmCollection<Message> data, boolean autoUpdate, Context context, User user) {
+    public MessagingAdapter(@Nullable OrderedRealmCollection<Message> data
+            , boolean autoUpdate, Context context, User user) {
         super(data, autoUpdate);
         this.messages = data;
         this.context = context;
@@ -116,7 +114,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         getDistinctMessagesTimestamps();
         activity = (ChatActivity) context;
     }
-
 
     //date header
     @Override
@@ -152,7 +149,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
 
     }
 
-
     @Override
     public int getItemCount() {
         return messages.size();
@@ -169,7 +165,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         // check the type of view and return holder
         return getHolderByType(parent, viewType);
     }
-
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder mHolder, int position) {
@@ -361,9 +356,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     }
 
 
-
-
-
     //same as "bindReceivedContact"
     private void bindSentContact(final SentContactHolder mHolder, final Message message) {
 
@@ -427,7 +419,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
 
 
     }
-
 
 
     private void bindSentFile(final SentFileHolder mHolder, final Message message) {
@@ -577,8 +568,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         });
     }
 
-
-
     private void bindSentAudio(final SentAudioHolder holder, final Message message) {
         holder.tvTime.setText(message.getTime());
 
@@ -675,8 +664,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         });
     }
 
-
-
     private void bindSentVoice(SentVoiceMessageHolder mHolder, final Message message) {
         final SentVoiceMessageHolder holder = mHolder;
 
@@ -769,8 +756,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         });
     }
 
-
-
     private void bindSentImage(final SentImageHolder holder, final Message message) {
         holder.tvTime.setText(message.getTime());
         holder.tvFileSizeImgDownload.setText(message.getMetadata());
@@ -862,7 +847,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
 
     }
 
-
     private void bindSentText(SentTextHolder mHolder, Message message) {
         SentTextHolder holder = mHolder;
         holder.tvTime.setText(message.getTime());
@@ -892,14 +876,12 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         activity.seekTo(message.getMessageId(), progress);
     }
 
-
     private int getPreviousProgressIfAvailable(String messageId) {
         int progress = -1;
         if (audioRecyclerState.containsKey(messageId))
             progress = audioRecyclerState.get(messageId).getProgress();
         return progress;
     }
-
 
     //start action mode and select this message
     private void onLongClicked(View view, int pos) {
@@ -968,7 +950,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
             activity.hideShareItem();
     }
 
-
     private void itemRemoved(View view, Message message) {
         if (message.isMediaType())
             isListContainsMedia = false;
@@ -1023,7 +1004,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
     }
 
-
     private void hideOrShowDownloadLayout(FrameLayout progressLayout, View btnRetry, View btnPlay, int stat) {
 
         switch (stat) {
@@ -1076,7 +1056,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
     }
 
-
     //keep item background as selected when scroll
     private void keepActionModeItemsSelected(View itemView, Message message) {
         if (selectedItemsForActionMode.contains(message)) {
@@ -1098,7 +1077,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         isListContainsMedia = false;
     }
 
-
     @Override
     public boolean onLongClick(View view) {
 
@@ -1111,7 +1089,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         return true;
     }
 
-
     static class HeaderHolder extends RecyclerView.ViewHolder {
         public TextView header;
 
@@ -1121,7 +1098,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
             header = (TextView) itemView.findViewById(R.id.tv_day);
         }
     }
-
 
     class SentMessageHolder extends RecyclerView.ViewHolder {
 
@@ -1353,7 +1329,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
     }
 
-
     public class ReceivedVoiceMessageHolder extends ReceivedMessageHolder {
         public ImageView playBtn;
         public SeekBar seekBar;
@@ -1524,7 +1499,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
 
     }
-
 
     public class ReceivedVideoMessageHolder extends ReceivedMessageHolder {
         private ImageView thumbImg;
@@ -1977,7 +1951,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
     }
 
-
     public class ReceivedContactHolder extends ReceivedMessageHolder {
         private RelativeLayout relativeContactInfo;
         private TextView tvContactName;
@@ -2078,7 +2051,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
 
         }
     }
-
 
     public class SentLocationHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
         private GoogleMap mGoogleMap;
@@ -2294,7 +2266,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         }
     }
 
-
     //update timestamps if needed when a new message inserted
     public void messageInserted() {
         int index = messages.size() - 1;
@@ -2318,7 +2289,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         return activity.isInActionMode;
     }
 
-
     private void loadUserPhoto(String fromId, final ImageView imageView) {
         //if it's a group load the user image
         if (isGroup && groupUsers != null) {
@@ -2332,7 +2302,6 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
 
         }
     }
-
 
     private RecyclerView.ViewHolder getHolderByType(ViewGroup parent, int viewType) {
         switch (viewType) {

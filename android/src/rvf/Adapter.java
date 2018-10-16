@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 import java.util.ArrayList;
 

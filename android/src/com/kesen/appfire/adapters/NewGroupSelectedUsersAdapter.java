@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.realms.User;
 import com.kesen.appfire.utils.BitmapUtils;
 

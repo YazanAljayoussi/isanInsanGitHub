@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 /**
  * Created by Devlomi on 06/12/2017.

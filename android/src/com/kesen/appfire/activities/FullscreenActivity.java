@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.FullScreenAdapter;
 import com.kesen.appfire.interfaces.ToolbarStateChange;
 import com.kesen.appfire.model.realms.Message;

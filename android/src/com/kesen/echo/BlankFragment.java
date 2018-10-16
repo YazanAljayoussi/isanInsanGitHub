@@ -1,39 +1,35 @@
-package com.mygdx.game;
+package com.kesen.echo;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
- * A fragment with a Google +1 button.
+ * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PlusOneFragment.OnFragmentInteractionListener} interface
+ * {@link BlankFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PlusOneFragment#newInstance} factory method to
+ * Use the {@link BlankFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlusOneFragment extends Fragment {
+public class BlankFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    // The request code must be 0 or greater.
-    private static final int PLUS_ONE_REQUEST_CODE = 0;
-    // The URL to +1.  Must be a valid URL.
-    private final String PLUS_ONE_URL = "http://developer.android.com";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    //private PlusOneButton mPlusOneButton;
 
     private OnFragmentInteractionListener mListener;
 
-    public PlusOneFragment() {
+    public BlankFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +39,11 @@ public class PlusOneFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PlusOneFragment.
+     * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlusOneFragment newInstance(String param1, String param2) {
-        PlusOneFragment fragment = new PlusOneFragment();
+    public static BlankFragment newInstance(String param1, String param2) {
+        BlankFragment fragment = new BlankFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,32 +60,15 @@ public class PlusOneFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plus_one, container, false);
-
-        //Find the +1 button
-        //mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Refresh the state of the +1 button each time the activity receives focus.
-       // mPlusOneButton.initialize(PLUS_ONE_URL, PLUS_ONE_REQUEST_CODE);
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Integer dir) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(dir);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -108,6 +87,35 @@ public class PlusOneFragment extends Fragment {
         mListener = null;
     }
 
+    View view;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_blank, container, false);
+        Button upButton = (Button) view.findViewById(R.id.button3);
+        upButton.setOnClickListener(this);
+
+        Button downButton = (Button) view.findViewById(R.id.button2);
+        downButton.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        //do what you want to do when button is clicked
+        switch (v.getId()) {
+            case R.id.button2:
+                mListener.onFragmentInteraction(+1);
+                break;
+            case R.id.button3:
+                mListener.onFragmentInteraction(-1);
+                break;
+        }
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -120,7 +128,6 @@ public class PlusOneFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Integer dir);
     }
-
 }

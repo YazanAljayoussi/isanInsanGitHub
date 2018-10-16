@@ -7,11 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.mygdx.game.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.FireManager;
 import com.kesen.appfire.utils.PermissionsUtil;
 import com.kesen.appfire.utils.SharedPreferencesManager;
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
+
         //request permissions if API >=23
         //if the device is under API23 the the permissions will granted automatically
         requestPermissions();
@@ -37,7 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, PermissionsUtil.permissions, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this,
+                PermissionsUtil.permissions, PERMISSION_REQUEST_CODE);
     }
 
     private void showAlertDialog() {
@@ -67,7 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build())).build(),
+                        .setAvailableProviders(
+                                Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build())).build(),
                 RC_SIGN_IN);
 
 

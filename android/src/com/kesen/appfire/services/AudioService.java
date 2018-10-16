@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.events.AudioServiceCallbacksEvent;
 import com.kesen.appfire.model.constants.HeadsetState;
 import com.kesen.appfire.model.constants.SensorState;

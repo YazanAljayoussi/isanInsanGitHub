@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
 import com.badlogic.gdx.utils.Timer;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import rvf.Adapter;
 import rvf.InsanRecyclerView;
@@ -49,6 +51,8 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 
 		transaction.commit();
 		intiActivityComp();
+
+
 
 	}
 	private void intiActivityComp() {

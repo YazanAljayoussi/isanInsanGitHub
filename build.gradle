@@ -1,4 +1,5 @@
 buildscript {
+    
 
     repositories {
 
@@ -35,7 +36,6 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
-        supportLibraryVersion = '27.1.1'
     }
 
     repositories {
@@ -112,4 +112,3 @@ project(":core") {
 tasks.eclipse.doLast {
     delete ".project"
 }
-

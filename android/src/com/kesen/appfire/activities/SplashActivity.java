@@ -7,7 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mygdx.game.R;
 import com.kesen.appfire.utils.DetachableClickListener;
 import com.kesen.appfire.utils.FireManager;
@@ -53,6 +56,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startNextActivity() {
+
         if (SharedPreferencesManager.isUserInfoSaved()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

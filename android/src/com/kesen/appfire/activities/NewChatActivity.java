@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.UsersAdapter;
 import com.kesen.appfire.events.SyncContactsFinishedEvent;
 import com.kesen.appfire.model.realms.User;

@@ -23,7 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.settings.SettingsActivity;
 import com.kesen.appfire.adapters.ChatsAdapter;
 import com.kesen.appfire.job.SaveTokenJob;

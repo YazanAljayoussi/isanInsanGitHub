@@ -41,7 +41,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:199515418460:android:a29c971dfc44c526",
         "android_client_info": {
-          "package_name": "com.mygdx.game"
+          "package_name": "com.kesen.echo"
         }
       },
       "oauth_client": [
@@ -49,7 +49,7 @@
           "client_id": "199515418460-chiej8t1udtpap88o4211vghf2pd74ur.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mygdx.game",
+            "package_name": "com.kesen.echo",
             "certificate_hash": "354b6861a0e4c8c6dbb1dc1e91d57da0eb8f28af"
           }
         },

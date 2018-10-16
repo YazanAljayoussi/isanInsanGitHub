@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.MediaGalleryAdapter;
 import com.kesen.appfire.model.realms.Message;
 import com.kesen.appfire.model.realms.User;

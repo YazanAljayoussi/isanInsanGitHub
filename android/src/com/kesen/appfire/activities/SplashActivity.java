@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.DetachableClickListener;
 import com.kesen.appfire.utils.FireManager;
 import com.kesen.appfire.utils.PermissionsUtil;

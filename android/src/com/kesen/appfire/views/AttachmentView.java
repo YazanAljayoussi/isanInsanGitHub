@@ -14,7 +14,7 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 import io.codetail.animation.SupportAnimator;
 

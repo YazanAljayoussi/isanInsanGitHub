@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.evernote.android.job.JobManager;
 import com.google.android.gms.ads.MobileAds;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.job.FireJobCreator;
 
 import io.realm.Realm;

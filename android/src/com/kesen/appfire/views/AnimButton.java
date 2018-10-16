@@ -13,7 +13,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.devlomi.record_view.RecordButton;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 /**
  * Created by Devlomi on 01/11/2017.

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.ContactDetailsAdapter;
 import com.kesen.appfire.model.realms.Message;
 import com.kesen.appfire.model.realms.PhoneNumber;

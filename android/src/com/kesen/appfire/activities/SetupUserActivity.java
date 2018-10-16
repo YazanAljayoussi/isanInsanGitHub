@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.events.FetchingUserGroupsFinished;
 import com.kesen.appfire.utils.AppVerUtil;
 import com.kesen.appfire.utils.BitmapUtils;

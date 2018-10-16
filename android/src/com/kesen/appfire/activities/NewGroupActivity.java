@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devlomi.hidely.hidelyviews.HidelyImageView;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.ForwardAdapter;
 import com.kesen.appfire.adapters.NewGroupAdapter;
 import com.kesen.appfire.adapters.NewGroupSelectedUsersAdapter;

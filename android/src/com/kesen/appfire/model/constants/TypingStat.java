@@ -2,7 +2,7 @@ package com.kesen.appfire.model.constants;
 
 import android.content.Context;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 /**
  * Created by Devlomi on 17/08/2017.

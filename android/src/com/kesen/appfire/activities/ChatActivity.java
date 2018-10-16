@@ -59,7 +59,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.MessagingAdapter;
 import com.kesen.appfire.events.AudioServiceCallbacksEvent;
 import com.kesen.appfire.events.GroupActiveStateChanged;

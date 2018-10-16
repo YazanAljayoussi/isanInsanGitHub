@@ -14,7 +14,7 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.FireManager;
 import com.kesen.appfire.utils.PermissionsUtil;
 import com.kesen.appfire.utils.SharedPreferencesManager;

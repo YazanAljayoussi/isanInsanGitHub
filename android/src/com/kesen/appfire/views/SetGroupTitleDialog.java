@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 public class SetGroupTitleDialog extends AlertDialog.Builder {
     //onClickListener callback

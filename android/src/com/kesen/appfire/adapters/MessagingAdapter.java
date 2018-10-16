@@ -27,7 +27,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ChatActivity;
 import com.kesen.appfire.activities.ContactDetailsActivity;
 import com.kesen.appfire.model.AudioRecyclerState;

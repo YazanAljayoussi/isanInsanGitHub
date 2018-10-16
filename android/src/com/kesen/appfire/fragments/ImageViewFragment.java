@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.interfaces.ToolbarStateChange;
 import com.kesen.appfire.model.realms.Message;
 

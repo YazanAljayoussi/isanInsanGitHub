@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.kesen.appfire.utils.IntentUtils;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 
 /**

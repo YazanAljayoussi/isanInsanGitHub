@@ -1,66 +1,35 @@
 {
   "project_info": {
-    "project_number": "199515418460",
-    "firebase_url": "https://echo-30fab.firebaseio.com",
-    "project_id": "echo-30fab",
-    "storage_bucket": "echo-30fab.appspot.com"
+    "project_number": "136735885828",
+    "firebase_url": "https://echo-hub-kesen.firebaseio.com",
+    "project_id": "echo-hub-kesen",
+    "storage_bucket": "echo-hub-kesen.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:199515418460:android:a7bfd8be00d9f229",
+        "mobilesdk_app_id": "1:136735885828:android:a7bfd8be00d9f229",
         "android_client_info": {
           "package_name": "com.kesen.echo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "199515418460-mhas6q8lq0cgjv7dk6lbk51dcq8jd39k.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAlSPSsnzIx5SIIRvcj0MTxN6qwH57BQ7s"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:199515418460:android:a29c971dfc44c526",
-        "android_client_info": {
-          "package_name": "com.kesen.echo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "199515418460-chiej8t1udtpap88o4211vghf2pd74ur.apps.googleusercontent.com",
+          "client_id": "136735885828-6729q7eqh95vuddo7bhmot0qv68o4at1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kesen.echo",
-            "certificate_hash": "354b6861a0e4c8c6dbb1dc1e91d57da0eb8f28af"
+            "certificate_hash": "359f4145d109f1256be92e9bf4466b4d0d8218ae"
           }
         },
         {
-          "client_id": "199515418460-mhas6q8lq0cgjv7dk6lbk51dcq8jd39k.apps.googleusercontent.com",
+          "client_id": "136735885828-1rv26v0c3ac8fg5tdvj9uaf1ltgfv0ki.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAlSPSsnzIx5SIIRvcj0MTxN6qwH57BQ7s"
+          "current_key": "AIzaSyAp1rLfPVJIB3ct9jbSc4fHoV3V1sBMXvg"
         }
       ],
       "services": {
@@ -71,41 +40,10 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "199515418460-mhas6q8lq0cgjv7dk6lbk51dcq8jd39k.apps.googleusercontent.com",
+              "client_id": "136735885828-1rv26v0c3ac8fg5tdvj9uaf1ltgfv0ki.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:199515418460:android:090afbb88702932c",
-        "android_client_info": {
-          "package_name": "rvf.com.fbconnection"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "199515418460-mhas6q8lq0cgjv7dk6lbk51dcq8jd39k.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAlSPSsnzIx5SIIRvcj0MTxN6qwH57BQ7s"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

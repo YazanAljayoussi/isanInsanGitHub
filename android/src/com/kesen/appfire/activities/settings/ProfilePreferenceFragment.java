@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ProfilePhotoActivity;
 import com.kesen.appfire.utils.BitmapUtils;
 import com.kesen.appfire.utils.CropImageRequest;

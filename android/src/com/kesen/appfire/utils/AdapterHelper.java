@@ -6,7 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.constants.DownloadUploadStat;
 import com.kesen.appfire.model.constants.MessageStat;
 import com.kesen.appfire.model.constants.MessageType;

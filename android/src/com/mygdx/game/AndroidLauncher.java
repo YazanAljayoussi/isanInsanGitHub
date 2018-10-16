@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication.Callbacks;
 import com.badlogic.gdx.utils.Timer;
+import com.kesen.echo.R;
 
 import rvf.Adapter;
 import rvf.InsanRecyclerView;

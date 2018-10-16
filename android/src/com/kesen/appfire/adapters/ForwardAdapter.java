@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.devlomi.hidely.hidelyviews.HidelyImageView;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ForwardActivity;
 import com.kesen.appfire.model.realms.User;
 import com.kesen.appfire.utils.AppVerUtil;

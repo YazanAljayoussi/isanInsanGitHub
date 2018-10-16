@@ -32,7 +32,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.GroupParticipantsAdapter;
 import com.kesen.appfire.adapters.MediaHorizontalAdapter;
 import com.kesen.appfire.events.UpdateGroupEvent;

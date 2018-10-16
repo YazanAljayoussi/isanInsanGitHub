@@ -4,7 +4,7 @@ import android.content.Context;
 import android.preference.MultiSelectListPreference;
 import android.util.AttributeSet;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.StringUtils;
 
 /**

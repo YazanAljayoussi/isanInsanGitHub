@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 //this custom seekbar will allow us to change the seekbar
 // and thumb image color for older APIs with easy way

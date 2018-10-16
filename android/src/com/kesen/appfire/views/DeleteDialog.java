@@ -8,7 +8,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 
 //this will show a Confirmation delete dialog

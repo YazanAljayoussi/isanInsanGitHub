@@ -9,8 +9,8 @@ import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.support.v4.content.FileProvider;
 
-import com.mygdx.game.BuildConfig;
-import com.mygdx.game.R;
+import com.kesen.echo.BuildConfig;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.realms.PhoneNumber;
 import com.kesen.appfire.model.realms.RealmContact;
 import com.kesen.appfire.model.realms.RealmLocation;

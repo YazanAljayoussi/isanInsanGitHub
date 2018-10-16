@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.realms.PhoneNumber;
 
 import io.realm.RealmList;

@@ -16,7 +16,7 @@ import com.cjt2325.cameralibrary.listener.ErrorListener;
 import com.cjt2325.cameralibrary.listener.JCameraListener;
 import com.cjt2325.cameralibrary.listener.RecordStartListener;
 import com.cjt2325.cameralibrary.util.DeviceUtil;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.constants.MessageType;
 import com.kesen.appfire.utils.BitmapUtils;
 import com.kesen.appfire.utils.DirManager;

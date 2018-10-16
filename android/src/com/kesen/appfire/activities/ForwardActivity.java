@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.ForwardAdapter;
 import com.kesen.appfire.model.ExpandableContact;
 import com.kesen.appfire.model.realms.Message;

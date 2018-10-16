@@ -1,6 +1,6 @@
 package com.kesen.appfire.utils;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.constants.MessageType;
 
 /**

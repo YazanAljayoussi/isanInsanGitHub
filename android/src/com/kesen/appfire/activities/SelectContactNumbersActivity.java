@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.adapters.NumbersForContactAdapter;
 import com.kesen.appfire.model.ExpandableContact;
 import com.kesen.appfire.utils.ContactUtils;

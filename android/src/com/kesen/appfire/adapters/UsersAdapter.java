@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ChatActivity;
 import com.kesen.appfire.activities.NewChatActivity;
 import com.kesen.appfire.activities.ProfilePhotoDialog;

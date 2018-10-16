@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.events.UserImageDownloadedEvent;
 import com.kesen.appfire.model.constants.GroupEventTypes;
 import com.kesen.appfire.model.realms.User;

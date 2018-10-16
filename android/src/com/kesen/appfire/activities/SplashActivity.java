@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.DetachableClickListener;
 import com.kesen.appfire.utils.FireManager;
 import com.kesen.appfire.utils.PermissionsUtil;

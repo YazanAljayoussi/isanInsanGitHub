@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 
 //this will change the background tint color for the layouts
 public class TintHelper {

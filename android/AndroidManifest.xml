@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mygdx.game">
+    package="com.kesen.echo">
     <!-- To access Google+ APIs: -->
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -26,7 +26,7 @@
         android:required="false" />
 
     <uses-sdk
-        android:minSdkVersion="9"
+
         android:targetSdkVersion="27" />
 
 

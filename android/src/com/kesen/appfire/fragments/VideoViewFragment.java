@@ -21,7 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.interfaces.ToolbarStateChange;
 import com.kesen.appfire.model.realms.Message;
 import com.kesen.appfire.utils.BitmapUtils;

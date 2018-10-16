@@ -14,7 +14,7 @@ import android.support.v4.app.RemoteInput;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.activities.ChatActivity;
 import com.kesen.appfire.activities.MainActivity;
 import com.kesen.appfire.model.constants.DownloadUploadStat;

@@ -7,7 +7,7 @@ import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.model.realms.PhoneNumber;
 import com.thoughtbot.expandablecheckrecyclerview.CheckableChildRecyclerViewAdapter;
 import com.thoughtbot.expandablecheckrecyclerview.models.CheckedExpandableGroup;

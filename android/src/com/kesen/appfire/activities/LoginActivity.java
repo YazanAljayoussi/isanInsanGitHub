@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.mygdx.game.R;
+import com.kesen.echo.R;
 import com.kesen.appfire.utils.FireManager;
 import com.kesen.appfire.utils.PermissionsUtil;
 import com.kesen.appfire.utils.SharedPreferencesManager;

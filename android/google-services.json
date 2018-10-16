@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "136735885828",
+    "firebase_url": "https://echo-hub-kesen.firebaseio.com",
+    "project_id": "echo-hub-kesen",
+    "storage_bucket": "echo-hub-kesen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136735885828:android:a7bfd8be00d9f229",
+        "android_client_info": {
+          "package_name": "com.kesen.echo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136735885828-1rv26v0c3ac8fg5tdvj9uaf1ltgfv0ki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp1rLfPVJIB3ct9jbSc4fHoV3V1sBMXvg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

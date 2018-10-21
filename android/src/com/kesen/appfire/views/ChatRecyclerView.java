@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import rvf.InsanRecyclerView;
+
 //this class will prevent recyclerView from scrolling when
 // the keyboard opens to keep the items in bounds
-public class ChatRecyclerView extends RecyclerView {
+public class ChatRecyclerView extends InsanRecyclerView {
     private int oldHeight;
 
     public ChatRecyclerView(Context context) {

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -27,9 +28,11 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
@@ -39,6 +42,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
+import com.badlogic.gdx.utils.Timer;
 import com.bumptech.glide.Glide;
 import com.cjt2325.cameralibrary.ResultCodes;
 import com.codekidlabs.storagechooser.StorageChooser;
@@ -59,6 +64,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.kesen.echo.AndroidLauncher;
+import com.kesen.echo.BlankFragment;
 import com.kesen.echo.R;
 import com.kesen.appfire.adapters.MessagingAdapter;
 import com.kesen.appfire.events.AudioServiceCallbacksEvent;
@@ -145,6 +152,7 @@ import omrecorder.OmRecorder;
 import omrecorder.PullTransport;
 import omrecorder.PullableSource;
 import omrecorder.Recorder;
+
 
 
 public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypingListener {
@@ -295,10 +303,57 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         }
     };
 
+    public static class GameFragment
+            extends AndroidFragmentApplication
+            implements com.kesen.echo.ICreator, BlankFragment.OnFragmentInteractionListener
+    {
+        public com.kesen.echo.MyGdxGame myGdxGame;
+        // 5. Add the initializeForView() code in the Fragment's onCreateView method.
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            myGdxGame= new com.kesen.echo.MyGdxGame(this);
+            return initializeForView(myGdxGame);
+        }
+
+        @Override
+        public void LibGDXInied() {
+            Timer.schedule(new Timer.Task(){
+                               @Override
+                               public void run() {
+                                   myGdxGame.rotate();
+                               }
+                           }
+                    , 1
+                    , 0.01f
+            );
+        }
+
+        @Override
+        public void onFragmentInteraction(Integer dir) {
+            myGdxGame.dir= dir;
+        }
+    }
+
+    private GameFragment gameFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+
+        gameFragment = new GameFragment();
+        //controlFragment = new BlankFragment();
+
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+
+
+        //transaction.add(R.id.send_fragment, controlFragment);
+        transaction.add(R.id.characters_fragment, gameFragment);
+
+        transaction.commit();
 
         init();
         setSupportActionBar(toolbar);

@@ -29,6 +29,7 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	InsanRecyclerView recyclerView;
 	Adapter adapter;
 	Toolbar toolbar;
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState);
@@ -81,14 +82,14 @@ public class AndroidLauncher extends FragmentActivity implements Callbacks
 	// 4. Create a Class that extends AndroidFragmentApplication which is the Fragment implementation for Libgdx.
 	public static class GameFragment
 			extends AndroidFragmentApplication
-			implements ICreator, BlankFragment.OnFragmentInteractionListener
+			implements com.kesen.echo.ICreator, BlankFragment.OnFragmentInteractionListener
 	{
-		public MyGdxGame myGdxGame;
+		public com.kesen.echo.MyGdxGame myGdxGame;
 		// 5. Add the initializeForView() code in the Fragment's onCreateView method.
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			myGdxGame= new MyGdxGame(this);
+			myGdxGame= new com.kesen.echo.MyGdxGame(this);
 			return initializeForView(myGdxGame);
 		}
 

@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class InsanRecyclerView extends RecyclerView {
     HashMap  <Integer,HolderContent> viewsH =new HashMap<Integer,HolderContent>();
-    HashMap  <Integer,int[]> viewsLocationsHM =new HashMap<Integer,int[]>();
+
 
     static InsanRecyclerView instance;
 
@@ -38,31 +38,31 @@ public class InsanRecyclerView extends RecyclerView {
         instance= this;
     }
 
-    public void setView(int holderHashCode,View view,rvf.Adapter.ViewHolder holder)
+    public void setView(View view,rvf.Adapter.ViewHolder holder)
     {
-        viewsH.put(holderHashCode,new HolderContent(view,holder));
+        viewsH.put(holder.hashCode(),new HolderContent(view,holder));
     }
 
-    public void syncViewLocation(int holderHashCode)
+    void iniFromHistory(){
+        //InsanRecyclerView.instance.setView(itemView, this);
+        //InsanRecyclerView.instance.syncViewLocation(this.hashCode());
+    }
+    public void syncViewLocation(Integer holderHashCode)
     {
         int[] xyIntArray  = new int[2];
-        //viewsH.get(holderHashCode).getLocationOnScreen(xyIntArray);
-        viewsLocationsHM.put(holderHashCode, xyIntArray);
+        HolderContent holderContent= viewsH.get(holderHashCode);
+        holderContent.view.getLocationOnScreen(xyIntArray);
+        int y= Resources.getSystem().getDisplayMetrics().heightPixels - (xyIntArray[1] + holderContent.view.getHeight());
+        ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode, xyIntArray[1] == 0);
     }
+
 
     @Override
     public void onScrolled(int dx, int dy) {
         super.onScrolled(dx, dy);
         for (Map.Entry<Integer,HolderContent> entry : viewsH.entrySet()) {
-            HolderContent holderContent =  entry.getValue();
             int holderHashCode = entry.getKey();
-
-            int[] xyIntArray  = new int[2];
-            holderContent.view.getLocationOnScreen(xyIntArray);
-
-            int y= Resources.getSystem().getDisplayMetrics().heightPixels - (xyIntArray[1] + holderContent.view.getHeight());
-            //Log.i("Y: ", String.valueOf(xyIntArray[1]));
-            ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode, xyIntArray[1] == 0);
+            syncViewLocation(holderHashCode);
         }
     }
 

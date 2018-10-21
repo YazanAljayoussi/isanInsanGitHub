@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.UBJsonReader;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import sun.rmi.runtime.Log;
@@ -44,12 +41,15 @@ class CharacterContent {
 //		modelInstance = new ModelInstance(box);
         modelInstance = new ModelInstance(MyGdxGame.model);
 
-//		Animation animation= modelInstance.getAnimation("mixamo.com");
-//		animation.nodeAnimations
-//		Json Json= new Json();
-        controller = new AnimationController(modelInstance);
 
-        controller.setAnimation("mixamo.com",-1);
+        controller = new AnimationController(modelInstance);
+        //controller.set
+        //controller.setAnimation("mixamo.com",-1);
+        //controller.setAnimation("Armature|Armature|Take 001|BaseLayer",-1);
+
+       // controller.setAnimation("Armature|Armature|Take 001|BaseLayer",-1);
+        //controller.setAnimation("Take 001",-1);
+
 
     }
     public Vector3  worldCoordinates;

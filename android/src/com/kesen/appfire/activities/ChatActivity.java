@@ -346,14 +346,14 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         gameFragment = new GameFragment();
         //controlFragment = new BlankFragment();
 
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction();
-
-
-        //transaction.add(R.id.send_fragment, controlFragment);
-        transaction.add(R.id.characters_fragment, gameFragment);
-
-        transaction.commit();
+//        FragmentTransaction transaction =
+//                getSupportFragmentManager().beginTransaction();
+//
+//
+//        //transaction.add(R.id.send_fragment, controlFragment);
+//        transaction.add(R.id.characters_fragment, gameFragment);
+//
+//        transaction.commit();
 
         init();
         setSupportActionBar(toolbar);

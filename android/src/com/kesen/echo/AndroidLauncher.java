@@ -22,7 +22,7 @@ import rvf.Adapter;
 import rvf.InsanRecyclerView;
 
 
-public class AndroidLauncher extends FragmentActivity implements Callbacks
+public class 	AndroidLauncher extends FragmentActivity implements Callbacks
 		, BlankFragment.OnFragmentInteractionListener {
 	private GameFragment gameFragment;
 	private BlankFragment controlFragment;

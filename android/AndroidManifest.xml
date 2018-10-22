@@ -47,11 +47,7 @@
             android:theme="@style/GdxTheme.NotFullscreen">
 
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
@@ -71,6 +67,12 @@
             android:name="com.kesen.appfire.activities.SplashActivity"
             android:screenOrientation="portrait"
             >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity

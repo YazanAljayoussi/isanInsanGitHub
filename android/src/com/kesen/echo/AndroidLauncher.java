@@ -82,34 +82,16 @@ public class 	AndroidLauncher extends FragmentActivity implements Callbacks
 	// 4. Create a Class that extends AndroidFragmentApplication which is the Fragment implementation for Libgdx.
 	public static class GameFragment
 			extends AndroidFragmentApplication
-			implements com.kesen.echo.ICreator, BlankFragment.OnFragmentInteractionListener
 	{
 		public com.kesen.echo.MyGdxGame myGdxGame;
 		// 5. Add the initializeForView() code in the Fragment's onCreateView method.
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			myGdxGame= new com.kesen.echo.MyGdxGame(this);
+			myGdxGame= new com.kesen.echo.MyGdxGame();
 			return initializeForView(myGdxGame);
 		}
 
-		@Override
-		public void LibGDXInied() {
-			Timer.schedule(new Timer.Task(){
-							   @Override
-							   public void run() {
-								   myGdxGame.rotate();
-							   }
-						   }
-					, 1
-					, 0.01f
-			);
-		}
-
-		@Override
-		public void onFragmentInteraction(Integer dir) {
-			myGdxGame.dir= dir;
-		}
 	}
 
 

@@ -36,7 +36,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	private Model box;
 	private ModelInstance modelInstance;
 	private Environment environment;
-	private ICreator creator;
+
     public Integer dir;
 	public static Model model;
 	private AnimationController controller;
@@ -45,8 +45,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	public float camera_height;
 	Image backgroundSprite;
 	Texture backgroundTexture;
-	public MyGdxGame(ICreator aCreator){
-		creator= aCreator;
+	public MyGdxGame(){
 	}
 	public void iniModel(){
 
@@ -122,8 +121,7 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 
 		//controller.setAnimation("mixamo.com",-1);
 		Gdx.input.setInputProcessor(this);
-		if (creator!= null)
-		creator.LibGDXInied();
+
 		initialized= true;
 		instance= this;
 	}

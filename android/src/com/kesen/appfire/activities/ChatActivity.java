@@ -155,7 +155,7 @@ import omrecorder.Recorder;
 
 
 
-public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypingListener {
+public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypingListener,AndroidFragmentApplication.Callbacks {
 
     //random numbers just to identify requestCode
     private static final int PICK_MUSIC_REQUEST = 159;
@@ -303,39 +303,9 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         }
     };
 
-    public static class GameFragment
-            extends AndroidFragmentApplication
-            implements com.kesen.echo.ICreator, BlankFragment.OnFragmentInteractionListener
-    {
-        public com.kesen.echo.MyGdxGame myGdxGame;
-        // 5. Add the initializeForView() code in the Fragment's onCreateView method.
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            myGdxGame= new com.kesen.echo.MyGdxGame(this);
-            return initializeForView(myGdxGame);
-        }
 
-        @Override
-        public void LibGDXInied() {
-            Timer.schedule(new Timer.Task(){
-                               @Override
-                               public void run() {
-                                   myGdxGame.rotate();
-                               }
-                           }
-                    , 1
-                    , 0.01f
-            );
-        }
 
-        @Override
-        public void onFragmentInteraction(Integer dir) {
-            myGdxGame.dir= dir;
-        }
-    }
-
-    private GameFragment gameFragment;
+    private AndroidLauncher.GameFragment gameFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,17 +313,17 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         setContentView(R.layout.activity_chat);
 
 
-        gameFragment = new GameFragment();
+        gameFragment = new AndroidLauncher.GameFragment();
         //controlFragment = new BlankFragment();
 
-//        FragmentTransaction transaction =
-//                getSupportFragmentManager().beginTransaction();
-//
-//
-//        //transaction.add(R.id.send_fragment, controlFragment);
-//        transaction.add(R.id.characters_fragment, gameFragment);
-//
-//        transaction.commit();
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+
+
+        //transaction.add(R.id.send_fragment, controlFragment);
+        transaction.add(R.id.characters_fragment, gameFragment);
+
+        transaction.commit();
 
         init();
         setSupportActionBar(toolbar);
@@ -2763,6 +2733,18 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
     public void onAllNotTyping(String groupId) {
         setGroupMembersInToolbar();
     }
+
+    @Override
+    public void exit() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
 }
 
 

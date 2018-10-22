@@ -8,7 +8,7 @@ import com.kesen.echo.MyGdxGame;
 public class DesktopLauncher implements ICreator {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MyGdxGame(null), config);
+		new LwjglApplication(new MyGdxGame(), config);
 	}
 
 	@Override

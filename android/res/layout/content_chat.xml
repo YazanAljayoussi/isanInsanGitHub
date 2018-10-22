@@ -12,17 +12,18 @@
     tools:showIn="@layout/activity_chat">
 
 
+    <FrameLayout
+        android:id="@+id/characters_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/characters_fragment"
-            android:layout_width="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_height="wrap_content" />
+
 
         <com.kesen.appfire.views.ChatRecyclerView
             android:id="@+id/recycler_chat"
@@ -135,6 +136,8 @@
         android:layout_marginBottom="60dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
+
+
 
 
 </RelativeLayout>

@@ -40,8 +40,8 @@ public class Adapter extends
                 inflate(R.layout.adapter, viewGroup, false);
 
         ViewHolder holder = new ViewHolder(view);
-
-        InsanRecyclerView.instance.setView(view,holder);
+//
+//        InsanRecyclerView.instance.setView(view,holder);
         return holder;
 
     }
@@ -49,7 +49,7 @@ public class Adapter extends
     @Override
     public void onBindViewHolder(final Adapter.ViewHolder holder, int position) {
         //TODO set animation here!
-        InsanRecyclerView.instance.syncViewLocation(holder.hashCode());
+       // InsanRecyclerView.instance.syncViewLocation(holder.hashCode());
     }
 
     @Override

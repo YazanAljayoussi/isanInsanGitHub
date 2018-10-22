@@ -58,6 +58,7 @@ import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
+import rvf.InsanRecyclerView;
 
 import static com.kesen.appfire.utils.AdapterHelper.getMessageStatDrawable;
 import static com.kesen.appfire.utils.AdapterHelper.getPlayIcon;
@@ -128,8 +129,11 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     //date header
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_day, parent, false);
-        return new HeaderHolder(view);
+        final View view = LayoutInflater.from(parent.getContext()).inflate
+                (R.layout.row_day, parent, false);
+        HeaderHolder holder = new HeaderHolder(view);
+
+        return holder;
     }
 
     //date header
@@ -163,7 +167,10 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // check the type of view and return holder
-        return getHolderByType(parent, viewType);
+        RecyclerView.ViewHolder holder= getHolderByType(parent, viewType);
+        InsanRecyclerView.instance.setView(holder.itemView,holder);
+
+        return holder;
     }
 
     @Override
@@ -1089,7 +1096,7 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
         return true;
     }
 
-    static class HeaderHolder extends RecyclerView.ViewHolder {
+    public static class HeaderHolder extends RecyclerView.ViewHolder {
         public TextView header;
 
         public HeaderHolder(View itemView) {

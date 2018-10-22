@@ -5,9 +5,9 @@ import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
+import com.kesen.appfire.adapters.MessagingAdapter;
 import com.kesen.echo.ScrollSyncer;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class InsanRecyclerView extends RecyclerView {
     HashMap  <Integer,HolderContent> viewsH =new HashMap<Integer,HolderContent>();
 
 
-    static InsanRecyclerView instance;
+    public static InsanRecyclerView instance;
 
     public InsanRecyclerView(Context context) {
         super(context);
@@ -38,7 +38,7 @@ public class InsanRecyclerView extends RecyclerView {
         instance= this;
     }
 
-    public void setView(View view,rvf.Adapter.ViewHolder holder)
+    public void setView(View view, RecyclerView.ViewHolder holder)
     {
         viewsH.put(holder.hashCode(),new HolderContent(view,holder));
     }
@@ -69,9 +69,9 @@ public class InsanRecyclerView extends RecyclerView {
      class HolderContent {
 
         View view;
-        rvf.Adapter.ViewHolder holder;
+         RecyclerView.ViewHolder holder;
 
-        public HolderContent(View view, rvf.Adapter.ViewHolder holder) {
+        public HolderContent(View view, RecyclerView.ViewHolder holder) {
             this.view = view;
             this.holder = holder;
         }

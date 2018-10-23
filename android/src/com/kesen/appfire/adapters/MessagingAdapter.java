@@ -168,7 +168,9 @@ public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, Recycler
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // check the type of view and return holder
         RecyclerView.ViewHolder holder= getHolderByType(parent, viewType);
-        InsanRecyclerView.instance.setView(holder.itemView,holder);
+        if (viewType == MessageType.RECEIVED_TEXT ||  viewType == MessageType.SENT_TEXT) {
+            InsanRecyclerView.instance.setView(holder.itemView, holder);
+        }
 
         return holder;
     }

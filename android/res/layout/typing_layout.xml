@@ -10,6 +10,7 @@
     android:layout_alignParentBottom="true"
     android:gravity="center"
     android:orientation="horizontal"
+    android:background="@drawable/write_message_background"
     tools:showIn="@layout/content_chat">
 
 

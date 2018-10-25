@@ -49,7 +49,6 @@
             android:id="@+id/typing_layout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
             android:orientation="horizontal">
 
 
@@ -59,7 +58,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="2dp"/>
 
             <com.devlomi.record_view.RecordView
                 android:id="@+id/record_view"
@@ -79,8 +80,11 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/recv_bg_mic"
                 android:scaleType="centerInside"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 app:recording="@drawable/recv_ic_mic_white"
-                app:typing="@drawable/ic_send" />
+                app:typing="@drawable/ic_send"  />
 
 
         </LinearLayout>

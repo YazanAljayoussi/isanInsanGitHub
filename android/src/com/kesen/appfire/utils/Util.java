@@ -11,6 +11,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
+import android.util.DisplayMetrics;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -132,4 +133,15 @@ public class Util {
     public static boolean isOreoOrAbove() {
         return Build.VERSION.SDK_INT >= 26;
     }
+
+    public static int[] getScreenSize(Activity context)
+    {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        int[] arr = new int[]{width, height};
+        return arr;
+    }
+
 }

@@ -85,11 +85,21 @@ public class 	AndroidLauncher extends FragmentActivity implements Callbacks
 	{
 		public com.kesen.echo.MyGdxGame myGdxGame;
 		// 5. Add the initializeForView() code in the Fragment's onCreateView method.
+		int [] width_hight;
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			myGdxGame= new com.kesen.echo.MyGdxGame();
+			width_hight=Utils.getScreenSize(getActivity());
+			myGdxGame= new com.kesen.echo.MyGdxGame(width_hight);
+
 			return initializeForView(myGdxGame);
+		}
+
+		@Override
+		public void onStart()
+		{
+			super.onStart();
+			myGdxGame= new com.kesen.echo.MyGdxGame(width_hight);
 		}
 
 	}

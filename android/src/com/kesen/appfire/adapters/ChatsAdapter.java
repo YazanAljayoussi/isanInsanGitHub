@@ -1,5 +1,6 @@
 package com.kesen.appfire.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.badlogic.gdx.Gdx;
 import com.bumptech.glide.Glide;
+import com.kesen.echo.MyGdxGame;
 import com.kesen.echo.R;
 import com.kesen.appfire.activities.ChatActivity;
 import com.kesen.appfire.activities.MainActivity;
@@ -223,9 +226,17 @@ public class ChatsAdapter extends RealmRecyclerViewAdapter<Chat, RecyclerView.Vi
                         itemAdded(holder.itemView, chat);
                     //if it's not in actionMode start the chatActivity
                 } else {
-                    Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra(IntentUtils.UID, user.getUid());
-                    context.startActivity(intent);
+                    try {
+
+
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.putExtra(IntentUtils.UID, user.getUid());
+                        context.startActivity(intent);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
             }
         });

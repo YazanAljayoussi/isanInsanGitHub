@@ -52,8 +52,10 @@ public class InsanRecyclerView extends RecyclerView {
         int[] xyIntArray  = new int[2];
         HolderContent holderContent= viewsH.get(holderHashCode);
         holderContent.view.getLocationOnScreen(xyIntArray);
-        int y= Resources.getSystem().getDisplayMetrics().heightPixels - (xyIntArray[1] + holderContent.view.getHeight());
-        ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0], y, holderHashCode, xyIntArray[1] == 0);
+        int y= Resources.getSystem().getDisplayMetrics()
+                .heightPixels - (xyIntArray[1] + holderContent.view.getHeight());
+        ScrollSyncer.getInstance().setCharacterPosition(xyIntArray[0]
+                , y, holderHashCode, xyIntArray[1] == 0);
     }
 
 

@@ -1,28 +1,24 @@
 package com.kesen.echo;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.RenderableProvider;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.UBJsonReader;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import sun.rmi.runtime.Log;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 
 class CharacterContent {
-    private Model model;
-    private ModelInstance modelInstance;
-    private AnimationController controller;
+   // private Model model;
+    //private ModelInstance modelInstance;
+    private ModelInstance instance,ins;
+  //  private AnimationController controller;
+    private AnimationController animationController;
     private boolean me;
     static private boolean mes= false;
+
     public CharacterContent(){
         mes= !mes;
         me= mes;
@@ -39,10 +35,13 @@ class CharacterContent {
         //model = modelBuilder.createBox(10f,10f,10f, new Material(ColorAttribute.createDiffuse(Color.BLUE)), VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
 
 //		modelInstance = new ModelInstance(box);
-        modelInstance = new ModelInstance(MyGdxGame.model);
+      //  modelInstance = new ModelInstance(MyGdxGame.model2);
+       // instance=new com.badlogic.gdx.graphics.g3d.ModelInstance(MyGdxGame.model);
+        ins= new ModelInstance(MyGdxGame.model);
+     //   controller = new AnimationController(modelInstance);
+        animationController=new AnimationController(ins);
+        animationController.animate("mixamo.com", -1, 1f, null, 0f);
 
-
-        controller = new AnimationController(modelInstance);
         //controller.set
         //controller.setAnimation("mixamo.com",-1);
         //controller.setAnimation("Armature|Armature|Take 001|BaseLayer",-1);
@@ -54,23 +53,33 @@ class CharacterContent {
     }
     public Vector3  worldCoordinates;
     public void setLocation(int screenX, int screenY) {
-        if (MyGdxGame.instance== null){
-            boolean b= true;
-        }
+
+        Gdx.app.debug("set loc12","xyxy"+screenX+", "+screenY);
         int character_width= 50;
-
-        screenX= me ? character_width : (int)MyGdxGame.instance.camera_width - character_width;
+        float w = Gdx.graphics.getWidth();
+        float hi = Gdx.graphics.getHeight();
+        float r =  (hi / w);
+      float  camera_width=380;// MyGdxGame.instance.camera_width;
+       float camera_height= camera_width * r;
+        screenX= me ? character_width : (int)camera_width - character_width;
         float h= (float)screenY / (float)Gdx.graphics.getHeight();
-        worldCoordinates = new Vector3(screenX,  h * MyGdxGame.instance.camera_height, 0);
-        modelInstance.transform.setToTranslation(worldCoordinates);
-    }
+        worldCoordinates = new Vector3(screenX,  h * camera_height, 0);
+        Gdx.app.debug("set loc3","sss");
 
+        ins.transform.setToTranslation(screenX,h*camera_height,0);
+        Gdx.app.debug("set loc4","sss");
+
+    }
     public ModelInstance getModelInstance() {
-        return modelInstance;
+
+        return ins;
     }
 
     public void syncLocation() {
 
-        controller.update(Gdx.graphics.getDeltaTime());
+        //controller.update(Gdx.graphics.getDeltaTime());
+        animationController.update(Gdx.graphics.getDeltaTime());
     }
+
+
 }

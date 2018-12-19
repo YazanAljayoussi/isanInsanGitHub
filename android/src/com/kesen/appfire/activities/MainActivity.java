@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,10 +87,11 @@ public class MainActivity extends BaseActivity implements GroupTyping.GroupTypin
     public boolean isInActionMode() {
         return isInActionMode;
     }
-
+    public static MainActivity activity;
      protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity=this;
         init();
         //setSupportActionBar(toolbar);
         presenceUtil = new PresenceUtil();
@@ -144,7 +146,14 @@ public class MainActivity extends BaseActivity implements GroupTyping.GroupTypin
             });
         }
 
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //if(!ChatActivity.activity.isFinishing())
+       // ChatActivity.activity.finish();
+        Log.e("restart","ok");
     }
 
     //add a listener for the last message if the user has replied from the notification

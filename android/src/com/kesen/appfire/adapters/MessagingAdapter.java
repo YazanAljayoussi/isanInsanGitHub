@@ -74,7 +74,8 @@ import static com.kesen.appfire.utils.AdapterHelper.shouldEnableShareButton;
 
 //the RealmRecyclerViewAdapter provides autoUpdate feature
 //which will handle changes in list automatically with smooth animations
-public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, RecyclerView.ViewHolder> implements StickyHeaderAdapter, View.OnLongClickListener {
+public class MessagingAdapter extends RealmRecyclerViewAdapter<Message, RecyclerView.ViewHolder>
+        implements StickyHeaderAdapter, View.OnLongClickListener {
     private OrderedRealmCollection<Message> messages;
     private Context context;
     User user;

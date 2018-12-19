@@ -1,7 +1,10 @@
 package com.kesen.appfire.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -27,6 +30,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -66,6 +70,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.kesen.echo.AndroidLauncher;
 import com.kesen.echo.BlankFragment;
+import com.kesen.echo.MyGdxGame;
 import com.kesen.echo.R;
 import com.kesen.appfire.adapters.MessagingAdapter;
 import com.kesen.appfire.events.AudioServiceCallbacksEvent;
@@ -303,523 +308,539 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         }
     };
 
-
-
-    private AndroidLauncher.GameFragment gameFragment;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-
-
-        gameFragment = new AndroidLauncher.GameFragment();
-        //controlFragment = new BlankFragment();
-
-        FragmentTransaction transaction =
-                getSupportFragmentManager().beginTransaction();
-
-
-        //transaction.add(R.id.send_fragment, controlFragment);
-        transaction.add(R.id.characters_fragment, gameFragment);
-
-        transaction.commit();
-
-        init();
-        setSupportActionBar(toolbar);
-
-
-        //if user share something from external app to this app
-        if (getIntent().hasExtra(IntentUtils.EXTRA_MIME_TYPE) && getIntent().hasExtra(IntentUtils.UID)) {
-            String uid = getIntent().getStringExtra(IntentUtils.UID);
-            user = RealmHelper.getInstance().getUser(uid);
-            receiverUid = user.getUid();
-            getChat();
-            String mimeType = getIntent().getStringExtra(IntentUtils.EXTRA_MIME_TYPE);
-
-            String filePath = null;
-            if (getIntent().hasExtra(IntentUtils.EXTRA_REAL_PATH)) {
-                filePath = getIntent().getStringExtra(IntentUtils.EXTRA_REAL_PATH);
-            }
-
-
-            switch (mimeType) {
-                //text share
-                case MimeTypes.TEXT_PLAIN:
-                    String sharedText = getIntent().getStringExtra(IntentUtils.EXTRA_SHARED_TEXT);
-                    changeSendButtonState(true);
-                    etMessage.setText(sharedText);
-                    break;
-
-                //image share
-                case MimeTypes.IMAGE:
-                    //multiple images
-                    if (getIntent().hasExtra(IntentUtils.EXTRA_REAL_PATH_LIST)) {
-                        ArrayList<? extends String> imagesList = getIntent().getParcelableArrayListExtra(IntentUtils.EXTRA_REAL_PATH_LIST);
-                        for (String path : imagesList) {
-                            sendImage(path, false);
-                        }
-                        //one image
-                    } else {
-                        sendImage(filePath, false);
-                    }
-                    break;
-
-                //video
-                case MimeTypes.VIDEO:
-                    sendTheVideo(filePath);
-                    break;
-
-                //audio
-                case MimeTypes.AUDIO:
-                    String length = Util.getVideoLength(this, filePath);
-                    sendAudio(filePath, length);
-                    break;
-
-                //contact
-                case MimeTypes.CONTACT:
-                    List<ExpandableContact> selectedContacts = getIntent().getParcelableArrayListExtra(IntentUtils.EXTRA_CONTACT_LIST);
-                    sendContacts(selectedContacts);
-                    break;
-            }
-
-
-            //in case the user forwarded an image or a video from "FullScreenActivity"
-        } else if (getIntent().hasExtra(IntentUtils.EXTRA_FORWARDED)) {
-            String uid = getIntent().getStringExtra(IntentUtils.UID);
-            user = RealmHelper.getInstance().getUser(uid);
-            receiverUid = user.getUid();
-            getChat();
-            Message message = getIntent().getParcelableExtra(IntentUtils.EXTRA_MESSAGE);
-            sendMessage(message);
-        } else {
-            //otherwise the user is coming from main activity
-            //getting the user from realm because the thumb img may different from the parcelable
-            String uid = getIntent().getStringExtra(IntentUtils.UID);
-            user = RealmHelper.getInstance().getUser(uid);
-            receiverUid = user.getUid();
-            getChat();
-        }
-
-        isGroup = user.isGroupBool();
-
-        if (isGroupNotNull()) {
-
-
-            hideOrShowTypingLayout(user.getGroup().isActive());
-            updateGroup();
-        }
-
-
-        loadMessagesList();
-
-        setAdapter();
-
-
-        fireListener = new FireListener();
-
-        presenceUtil = new PresenceUtil();
-
-        observeMessagesChanges();
-
-
-        setUserInfoInToolbar();
-
-        //animate exit animation from FullscreenActivity to this Activity
-        setExitSharedElementCallback(mCallback);
-
-
-        listenForFriendStat();
-
-        listenForTypingStat();
-
-        listenForMessageStatListener();
-
-        listenForVoiceMessageStatListener();
-
-        recordView.setCancelBounds(0);
-
-        recordButton.setRecordView(recordView);
-
-        recordButton.setOnRecordClickListener(new OnRecordClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user.isBlocked()) {
-                    showBlockedDialog();
-                    return;
-                }
-                String text = etMessage.getText().toString();
-                sendMessage(text);
-            }
-        });
-
-        recordView.setOnRecordListener(new OnRecordListener() {
-            @Override
-            public void onStart() {
-                hideOrShowRecord(false);
-                FireManager.setTypingStat(receiverUid, TypingStat.RECORDING, isGroup);
-                handleRecord();
-            }
-
-            @Override
-            public void onCancel() {
-                stopRecord(true, -1);
-                FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
-            }
-
-            @Override
-            public void onFinish(long recordTime) {
-                hideOrShowRecord(true);
-
-                FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
-                stopRecord(false, recordTime);
-                requestEditTextFocus();
-            }
-
-            @Override
-            public void onLessThanSecond() {
-                Toast.makeText(ChatActivity.this, R.string.voice_message_is_short_toast, Toast.LENGTH_SHORT).show();
-                hideOrShowRecord(true);
-                FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
-                stopRecord(true, -1);
-                requestEditTextFocus();
-            }
-        });
-
-        recordView.setOnBasketAnimationEndListener(new OnBasketAnimationEnd() {
-            @Override
-            public void onAnimationEnd() {
-                hideOrShowRecord(true);
-                requestEditTextFocus();
-            }
-        });
-
-
-        btnScroll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollToLast();
-            }
-        });
-
-        //check if user set preference Enter is Send
-        if (SharedPreferencesManager.isEnterIsSend())
-
-        {
-            etMessage.setImeOptions(EditorInfo.IME_ACTION_SEND);
-            etMessage.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        }
-
-        //onSendButton Click in keyboard
-        etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener()
-
-        {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendMessage(etMessage.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-        prefixEmojicon();
-
-        etMessage.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text = s.toString();
-
-                if (text.trim().length() > 0) {
-                    changeSendButtonState(true);
-                    FireManager.setTypingStat(receiverUid, TypingStat.TYPING, isGroup);
-
-
-                } else if (text.trim().length() == 0 && typingStarted) {
-                    changeSendButtonState(false);
-                    FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
-                }
-            }
-        });
-
-
-        etMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emojIcon.closeEmojIcon();
-                if (attachmentView.isShowing())
-                    attachmentView.hide(imgAttachment);
-
-            }
-        });
-
-        imgAttachment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (user.isBlocked()) {
-                    showBlockedDialog();
-                } else {
-                    attachmentView.reveal(view);
-                    KeyboardHelper.hideSoftKeyboard(ChatActivity.this, etMessage);
-                }
-
-            }
-        });
-
-
-        attachmentView.setOnAttachmentClick(new AttachmentView.AttachmentClickListener() {
-            @Override
-            public void OnClick(int id) {
-                switch (id) {
-                    case R.id.attachment_gallery:
-                        pickImages();
-                        break;
-
-                    case R.id.attachment_camera:
-                        startCamera();
-                        break;
-
-                    case R.id.attachment_document:
-                        pickFile();
-                        break;
-
-                    case R.id.attachment_audio:
-                        pickMusic();
-                        break;
-
-                    case R.id.attachment_contact:
-                        pickContact();
-                        break;
-
-                    case R.id.attachment_location:
-                        pickLocation();
-                        break;
-                }
-            }
-        });
-
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                //detect when user stops scrolling
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-
-                    int lastVisibleItemPosition = getLastVisibileItem();
-
-                    if (lastVisibleItemPosition != messageList.size() - 1) {
-                        //only show it when it is hidden
-                        if (!btnScroll.isShowing())
-                            btnScroll.show();
-
-                    } else {
-                        btnScroll.hide();
-                        hideUnreadCount();
-
-                    }
-                }
-            }
-
-        });
-
-
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (user.isBlocked()) {
-                    showBlockedDialog();
-                    return;
-                }
-
-                startCamera();
-            }
-        });
-
-        emojiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emojIcon.ShowEmojIcon();
-            }
-        });
-
-
-        btnToolbarBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-
-        searchViewToolbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-
-                final RealmResults<Message> results = RealmHelper.getInstance().searchForMessage(receiverUid, query);
-
-
-                if (!results.isEmpty()) {
-
-                    //get the found last message index
-                    searchIndex = results.size() - 1;
-                    String foundMessageId = results.get(searchIndex).getMessageId();
-                    int mIndex = getPosFromId(foundMessageId);
-
-
-                    scrollAndHighlightSearch(mIndex);
-
-
-                    downArrowSearchToolbar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //+2 because one for index and one for previous
-                            //check if there are another results
-                            if (results.isEmpty() || searchIndex + 2 > results.size()) {
-                                Toast.makeText(ChatActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-                            //increment current index
-                            searchIndex++;
-
-                            String foundMessageId = results.get(searchIndex).getMessageId();
-                            //get the index from chatList by message id from searchedList
-                            int mIndex = getPosFromId(foundMessageId);
-
-                            scrollAndHighlightSearch(mIndex);
-
-
-                        }
-                    });
-
-                    upArrowSearchToolbar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            if (results.isEmpty() || searchIndex - 1 < 0) {
-                                Toast.makeText(ChatActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-
-                            //decrement search index
-                            searchIndex -= 1;
-
-                            String foundMessageId = results.get(searchIndex).getMessageId();
-                            int mIndex = getPosFromId(foundMessageId);
-
-
-                            scrollAndHighlightSearch(mIndex);
-
-
-                        }
-                    });
-                }
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-
-        etMessage.setOnFocusChangeListener(new View.OnFocusChangeListener()
-
-        {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                wasInTypingMode = !hasFocus;
-            }
-        });
-
-
-        searchViewToolbar.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
-
-        {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b)
-                    KeyboardHelper.openSoftKeyboard(ChatActivity.this, view.findFocus());
-
-            }
-        });
-
-        searchViewToolbar.setOnCloseListener(new SearchView.OnCloseListener()
-
-        {
-            @Override
-            public boolean onClose() {
-                isInSearchMode = false;
-                return true;
-            }
-        });
-
-        toolbar.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View view) {
-                if (isInActionMode || isInSearchMode) return;
-                viewContact();
-            }
-        });
-
-        adapter.setOnItemClick(new MessagingAdapter.OnClickListener() {
-            @Override
-            public void onClick(String path, User user, String selectedMessageId, View imgView, int pos) {
-                if (!FileUtils.isFileExists(path)) {
-                    Toast.makeText(ChatActivity.this, R.string.item_deleted_from_storage, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent intent = new Intent(ChatActivity.this, FullscreenActivity.class);
-                intent.putExtra(IntentUtils.EXTRA_PATH, path);
-                intent.putExtra(IntentUtils.UID, user.getUid());
-                intent.putExtra(IntentUtils.EXTRA_MESSAGE_ID, selectedMessageId);
-                intent.putExtra(IntentUtils.EXTRA_STARTING_POSITION, pos);
-
-                int firstVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                int lastVisibleItemPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-
-                intent.putExtra(IntentUtils.EXTRA_FIRST_VISIBLE_ITEM_POSITION, firstVisibleItemPosition);
-                intent.putExtra(IntentUtils.EXTRA_LAST_VISIBLE_ITEM_POSITION, lastVisibleItemPosition);
-
-
-                if (!mIsDetailsActivityStarted) {
-                    mIsDetailsActivityStarted = true;
-                    // if it's video we don't want transition effect
-                    if (ViewCompat.getTransitionName(imgView) == null) {
-
-                        startActivity(intent);
-                    } else {
-                        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(ChatActivity.this,
-                                imgView, ViewCompat.getTransitionName(imgView)).toBundle());
-                    }
-                }
-
-
-            }
-        });
-
-        if (getResources().getBoolean(R.bool.is_interstitial_ad_enabled))
-            loadInterstitialAd();
+    protected void onRestart() {
+        super.onRestart();
 
     }
 
+
+    private AndroidLauncher.GameFragment gameFragment;
+    public  static ChatActivity activity;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        try {
+
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_chat);
+
+            activity = this;
+            gameFragment = new AndroidLauncher.GameFragment();
+            //controlFragment = new BlankFragment();
+
+            FragmentTransaction transaction =
+                    getSupportFragmentManager().beginTransaction();
+
+
+            //transaction.add(R.id.send_fragment, controlFragment);
+            transaction.replace(R.id.characters_fragment, gameFragment);
+
+            transaction.commit();
+
+            init();
+            setSupportActionBar(toolbar);
+
+
+            //if user share something from external app to this app
+            if (getIntent().hasExtra(IntentUtils.EXTRA_MIME_TYPE) && getIntent().hasExtra(IntentUtils.UID)) {
+                String uid = getIntent().getStringExtra(IntentUtils.UID);
+                user = RealmHelper.getInstance().getUser(uid);
+                receiverUid = user.getUid();
+                getChat();
+                String mimeType = getIntent().getStringExtra(IntentUtils.EXTRA_MIME_TYPE);
+
+                String filePath = null;
+                if (getIntent().hasExtra(IntentUtils.EXTRA_REAL_PATH)) {
+                    filePath = getIntent().getStringExtra(IntentUtils.EXTRA_REAL_PATH);
+                }
+
+
+                switch (mimeType) {
+                    //text share
+                    case MimeTypes.TEXT_PLAIN:
+                        String sharedText = getIntent().getStringExtra(IntentUtils.EXTRA_SHARED_TEXT);
+                        changeSendButtonState(true);
+                        etMessage.setText(sharedText);
+                        break;
+
+                    //image share
+                    case MimeTypes.IMAGE:
+                        //multiple images
+                        if (getIntent().hasExtra(IntentUtils.EXTRA_REAL_PATH_LIST)) {
+                            ArrayList<? extends String> imagesList = getIntent().getParcelableArrayListExtra(IntentUtils.EXTRA_REAL_PATH_LIST);
+                            for (String path : imagesList) {
+                                sendImage(path, false);
+                            }
+                            //one image
+                        } else {
+                            sendImage(filePath, false);
+                        }
+                        break;
+
+                    //video
+                    case MimeTypes.VIDEO:
+                        sendTheVideo(filePath);
+                        break;
+
+                    //audio
+                    case MimeTypes.AUDIO:
+                        String length = Util.getVideoLength(this, filePath);
+                        sendAudio(filePath, length);
+                        break;
+
+                    //contact
+                    case MimeTypes.CONTACT:
+                        List<ExpandableContact> selectedContacts = getIntent().getParcelableArrayListExtra(IntentUtils.EXTRA_CONTACT_LIST);
+                        sendContacts(selectedContacts);
+                        break;
+                }
+
+
+                //in case the user forwarded an image or a video from "FullScreenActivity"
+            } else if (getIntent().hasExtra(IntentUtils.EXTRA_FORWARDED)) {
+                String uid = getIntent().getStringExtra(IntentUtils.UID);
+                user = RealmHelper.getInstance().getUser(uid);
+                receiverUid = user.getUid();
+                getChat();
+                Message message = getIntent().getParcelableExtra(IntentUtils.EXTRA_MESSAGE);
+                sendMessage(message);
+            } else {
+                //otherwise the user is coming from main activity
+                //getting the user from realm because the thumb img may different from the parcelable
+                String uid = getIntent().getStringExtra(IntentUtils.UID);
+                user = RealmHelper.getInstance().getUser(uid);
+                receiverUid = user.getUid();
+                getChat();
+            }
+
+            isGroup = user.isGroupBool();
+
+            if (isGroupNotNull()) {
+
+
+                hideOrShowTypingLayout(user.getGroup().isActive());
+                updateGroup();
+            }
+
+
+            loadMessagesList();
+
+            setAdapter();
+
+
+            fireListener = new FireListener();
+
+            presenceUtil = new PresenceUtil();
+
+            observeMessagesChanges();
+
+
+            setUserInfoInToolbar();
+
+            //animate exit animation from FullscreenActivity to this Activity
+            setExitSharedElementCallback(mCallback);
+
+
+            listenForFriendStat();
+
+            listenForTypingStat();
+
+            listenForMessageStatListener();
+
+            listenForVoiceMessageStatListener();
+
+            recordView.setCancelBounds(0);
+
+            recordButton.setRecordView(recordView);
+
+            recordButton.setOnRecordClickListener(new OnRecordClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (user.isBlocked()) {
+                        showBlockedDialog();
+                        return;
+                    }
+                    String text = etMessage.getText().toString();
+                    sendMessage(text);
+                }
+            });
+
+            recordView.setOnRecordListener(new OnRecordListener() {
+                @Override
+                public void onStart() {
+                    hideOrShowRecord(false);
+                    FireManager.setTypingStat(receiverUid, TypingStat.RECORDING, isGroup);
+                    handleRecord();
+                }
+
+                @Override
+                public void onCancel() {
+                    stopRecord(true, -1);
+                    FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
+                    Log.e("chat cancel", "ok");
+                }
+
+                @Override
+                public void onFinish(long recordTime) {
+                    hideOrShowRecord(true);
+
+                    FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
+                    stopRecord(false, recordTime);
+                    requestEditTextFocus();
+                    Log.e("chat finish", "ok");
+
+                }
+
+                @Override
+                public void onLessThanSecond() {
+                    Toast.makeText(ChatActivity.this, R.string.voice_message_is_short_toast, Toast.LENGTH_SHORT).show();
+                    hideOrShowRecord(true);
+                    FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
+                    stopRecord(true, -1);
+                    requestEditTextFocus();
+                }
+            });
+
+            recordView.setOnBasketAnimationEndListener(new OnBasketAnimationEnd() {
+                @Override
+                public void onAnimationEnd() {
+                    hideOrShowRecord(true);
+                    requestEditTextFocus();
+                }
+            });
+
+
+            btnScroll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scrollToLast();
+                }
+            });
+
+            //check if user set preference Enter is Send
+            if (SharedPreferencesManager.isEnterIsSend())
+
+            {
+                etMessage.setImeOptions(EditorInfo.IME_ACTION_SEND);
+                etMessage.setRawInputType(InputType.TYPE_CLASS_TEXT);
+            }
+
+            //onSendButton Click in keyboard
+            etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener()
+
+            {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEND) {
+                        sendMessage(etMessage.getText().toString());
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+
+            prefixEmojicon();
+
+            etMessage.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String text = s.toString();
+
+                    if (text.trim().length() > 0) {
+                        changeSendButtonState(true);
+                        FireManager.setTypingStat(receiverUid, TypingStat.TYPING, isGroup);
+
+
+                    } else if (text.trim().length() == 0 && typingStarted) {
+                        changeSendButtonState(false);
+                        FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
+                    }
+                }
+            });
+
+
+            etMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emojIcon.closeEmojIcon();
+                    if (attachmentView.isShowing())
+                        attachmentView.hide(imgAttachment);
+
+                }
+            });
+
+            imgAttachment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (user.isBlocked()) {
+                        showBlockedDialog();
+                    } else {
+                        attachmentView.reveal(view);
+                        KeyboardHelper.hideSoftKeyboard(ChatActivity.this, etMessage);
+                    }
+
+                }
+            });
+
+
+            attachmentView.setOnAttachmentClick(new AttachmentView.AttachmentClickListener() {
+                @Override
+                public void OnClick(int id) {
+                    switch (id) {
+                        case R.id.attachment_gallery:
+                            pickImages();
+                            break;
+
+                        case R.id.attachment_camera:
+                            startCamera();
+                            break;
+
+                        case R.id.attachment_document:
+                            pickFile();
+                            break;
+
+                        case R.id.attachment_audio:
+                            pickMusic();
+                            break;
+
+                        case R.id.attachment_contact:
+                            pickContact();
+                            break;
+
+                        case R.id.attachment_location:
+                            pickLocation();
+                            break;
+                    }
+                }
+            });
+
+
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+
+                    //detect when user stops scrolling
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+
+                        int lastVisibleItemPosition = getLastVisibileItem();
+
+                        if (lastVisibleItemPosition != messageList.size() - 1) {
+                            //only show it when it is hidden
+                            if (!btnScroll.isShowing())
+                                btnScroll.show();
+
+                        } else {
+                            btnScroll.hide();
+                            hideUnreadCount();
+
+                        }
+                    }
+                }
+
+            });
+
+
+            cameraBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (user.isBlocked()) {
+                        showBlockedDialog();
+                        return;
+                    }
+
+                    startCamera();
+                }
+            });
+
+            emojiBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emojIcon.ShowEmojIcon();
+                }
+            });
+
+
+            btnToolbarBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+
+
+            searchViewToolbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(final String query) {
+
+                    final RealmResults<Message> results = RealmHelper.getInstance().searchForMessage(receiverUid, query);
+
+
+                    if (!results.isEmpty()) {
+
+                        //get the found last message index
+                        searchIndex = results.size() - 1;
+                        String foundMessageId = results.get(searchIndex).getMessageId();
+                        int mIndex = getPosFromId(foundMessageId);
+
+
+                        scrollAndHighlightSearch(mIndex);
+
+
+                        downArrowSearchToolbar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //+2 because one for index and one for previous
+                                //check if there are another results
+                                if (results.isEmpty() || searchIndex + 2 > results.size()) {
+                                    Toast.makeText(ChatActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                //increment current index
+                                searchIndex++;
+
+                                String foundMessageId = results.get(searchIndex).getMessageId();
+                                //get the index from chatList by message id from searchedList
+                                int mIndex = getPosFromId(foundMessageId);
+
+                                scrollAndHighlightSearch(mIndex);
+
+
+                            }
+                        });
+
+                        upArrowSearchToolbar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                if (results.isEmpty() || searchIndex - 1 < 0) {
+                                    Toast.makeText(ChatActivity.this, R.string.not_found, Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+
+                                //decrement search index
+                                searchIndex -= 1;
+
+                                String foundMessageId = results.get(searchIndex).getMessageId();
+                                int mIndex = getPosFromId(foundMessageId);
+
+
+                                scrollAndHighlightSearch(mIndex);
+
+
+                            }
+                        });
+                    }
+
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+
+
+            etMessage.setOnFocusChangeListener(new View.OnFocusChangeListener()
+
+            {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    wasInTypingMode = !hasFocus;
+                }
+            });
+
+
+            searchViewToolbar.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+
+            {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (b)
+                        KeyboardHelper.openSoftKeyboard(ChatActivity.this, view.findFocus());
+
+                }
+            });
+
+            searchViewToolbar.setOnCloseListener(new SearchView.OnCloseListener()
+
+            {
+                @Override
+                public boolean onClose() {
+                    isInSearchMode = false;
+                    return true;
+                }
+            });
+
+            toolbar.setOnClickListener(new View.OnClickListener()
+
+            {
+                @Override
+                public void onClick(View view) {
+                    if (isInActionMode || isInSearchMode) return;
+                    viewContact();
+                }
+            });
+
+            adapter.setOnItemClick(new MessagingAdapter.OnClickListener() {
+                @Override
+                public void onClick(String path, User user, String selectedMessageId, View imgView, int pos) {
+                    if (!FileUtils.isFileExists(path)) {
+                        Toast.makeText(ChatActivity.this, R.string.item_deleted_from_storage, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Intent intent = new Intent(ChatActivity.this, FullscreenActivity.class);
+                    intent.putExtra(IntentUtils.EXTRA_PATH, path);
+                    intent.putExtra(IntentUtils.UID, user.getUid());
+                    intent.putExtra(IntentUtils.EXTRA_MESSAGE_ID, selectedMessageId);
+                    intent.putExtra(IntentUtils.EXTRA_STARTING_POSITION, pos);
+
+                    int firstVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                    int lastVisibleItemPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+
+                    intent.putExtra(IntentUtils.EXTRA_FIRST_VISIBLE_ITEM_POSITION, firstVisibleItemPosition);
+                    intent.putExtra(IntentUtils.EXTRA_LAST_VISIBLE_ITEM_POSITION, lastVisibleItemPosition);
+
+
+                    if (!mIsDetailsActivityStarted) {
+                        mIsDetailsActivityStarted = true;
+                        // if it's video we don't want transition effect
+                        if (ViewCompat.getTransitionName(imgView) == null) {
+
+                            startActivity(intent);
+                        } else {
+                            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(ChatActivity.this,
+                                    imgView, ViewCompat.getTransitionName(imgView)).toBundle());
+                        }
+                    }
+
+
+                }
+            });
+
+            if (getResources().getBoolean(R.bool.is_interstitial_ad_enabled))
+                loadInterstitialAd();
+
+        }
+        catch (Exception e)
+        {
+
+        }
+        requestEditTextFocusOnStart();
+
+    }
     private void updateGroup() {
         GroupManager.updateGroup(this, user.getUid(), null, null);
     }
@@ -893,6 +914,7 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
             updateGroupEvent(new UpdateGroupEvent(user.getUid()));
 
         }
+     //   requestEditTextFocusOnStart();
 
     }
 
@@ -922,7 +944,11 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
     protected void onStop() {
         super.onStop();
         FireManager.setTypingStat(receiverUid, TypingStat.NOT_TYPING, isGroup);
+        Log.e("chat stop","ok");
+
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -1557,6 +1583,17 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         }
     }
 
+    private void requestEditTextFocusOnStart() {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    etMessage.requestFocus();
+                }
+            }, 100);
+
+
+    }
 
     private void setUserInfoInToolbar() {
         if (user.getThumbImg() != null)
@@ -2246,6 +2283,7 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
         //re inflate default menu
         toolbar.inflateMenu(R.menu.menu_chat);
         relativeUserInfo.setVisibility(View.VISIBLE);
+
     }
 
     //when user click the back button
@@ -2257,8 +2295,23 @@ public class ChatActivity extends BaseActivity implements GroupTyping.GroupTypin
             exitSearchMode();
         else if (attachmentView.isShowing()) {
             attachmentView.hide(imgAttachment);
-        } else
-            super.onBackPressed();
+        } else {
+            Log.e("backpressed","ok");
+        /*    Intent i = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+           if(MainActivity.activity!=null)
+           MainActivity.activity.finish();
+           Intent i=new Intent(getBaseContext(),MainActivity.class);
+            startActivity(i);*/
+            Intent mStartActivity = new Intent(getBaseContext(), MainActivity.class);
+            int mPendingIntentId = 123456;
+            PendingIntent mPendingIntent = PendingIntent.getActivity(getBaseContext(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+            AlarmManager mgr = (AlarmManager)getBaseContext().getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() , mPendingIntent);
+            System.exit(0);
+
+        }
     }
 
     private void exitSearchMode() {

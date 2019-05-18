@@ -1,1 +1,1 @@
-include 'desktop', 'android', 'core', ':cameraView'
+include  'android', 'core', ':cameraView', ':supernova-emoji-library'
